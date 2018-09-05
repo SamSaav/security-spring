@@ -3,6 +3,7 @@ package com.example.security.controller;
 import com.example.security.model.User;
 import com.example.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,9 +28,9 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    @ResponseBody
-    public User createUser(@RequestBody User usuario){
-        return userService.saveUser(usuario);
+    public ResponseEntity<?> createUser(@RequestParam String name, @RequestParam String lastName,
+                                             @RequestParam String email, @RequestParam String password, @RequestParam Long role){
+        return userService.saveUser(name, lastName, email, password, role);
     }
 
     @PostMapping("/user/{id}")

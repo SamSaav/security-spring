@@ -1,17 +1,30 @@
 package com.example.security.service;
 
+import com.example.security.model.Role;
 import com.example.security.model.User;
+import com.example.security.repositories.RoleRepository;
 import com.example.security.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<User> getUsers() {
         List<User> lstUsers = userRepository.findAll();
@@ -23,9 +36,22 @@ public class UserService {
         return user;
     }
 
-    public User saveUser(User user){
+    public Map<String, Object> maps(String var, Object some){
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put(var, some);
+        return dto;
+    }
+
+    public ResponseEntity<?> saveUser(String name, String lastName, String email, String password, Long role){
+        if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || role != null){
+            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+        }
+        if (userRepository.findByEmail(email) != null) {
+            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+        }
+        User user = new User(name, lastName, email, passwordEncoder.encode(password), roleRepository.getById(role));
         userRepository.save(user);
-        return user;
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     public User updateUser(Long id, User usuario){
@@ -68,8 +94,8 @@ public class UserService {
         if (usuario.getEmail() != null && user.getEmail() != usuario.getEmail()) {
             user.setEmail(usuario.getEmail());
         }
-        if (usuario.getPassword() != null && user.getPassword() != usuario.getPassword()) {
-            user.setPassword(usuario.getPassword());
+        if (usuario.getPassword() != null && passwordEncoder.encode(user.getPassword() ) != passwordEncoder.encode(usuario.getPassword())) {
+            user.setPassword(passwordEncoder.encode(usuario.getPassword()));
         }
         if (usuario.getRole() != null && user.getRole() != usuario.getRole()) {
             user.setRole(usuario.getRole());
