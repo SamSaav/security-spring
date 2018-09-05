@@ -13,13 +13,13 @@ public class Role {
     private String role;
 
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
-    private Set<Person> person;
+    private Set<User> users;
 
     public Role(){}
 
-    public Role(String role, Set<Person> person) {
+    public Role(String role, Set<User> users) {
         this.role = role;
-        this.person = person;
+        this.users = users;
     }
 
     public long getId() {
@@ -38,11 +38,11 @@ public class Role {
         this.role = role;
     }
 
-    public Set<Person> getPerson() {
-        return person;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setPerson(Set<Person> person) {
-        this.person = person;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

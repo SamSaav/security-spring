@@ -3,7 +3,7 @@ package com.example.security.model;
 import javax.persistence.*;
 
 @Entity
-public class Person {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,9 +17,9 @@ public class Person {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    public Person(){}
+    public User(){}
 
-    public Person(String name, String lastName, String email, String password, Role role) {
+    public User(String name, String lastName, String email, String password, Role role) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;

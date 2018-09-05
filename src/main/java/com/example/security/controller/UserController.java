@@ -1,6 +1,6 @@
 package com.example.security.controller;
 
-import com.example.security.model.Person;
+import com.example.security.model.User;
 import com.example.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,20 +15,38 @@ public class UserController {
 
     @GetMapping("/users")
     @ResponseBody
-    public List<Person> getUsuarios() {
+    public List<User> getUsuarios() {
         return userService.getUsers();
     }
 
     @GetMapping("/user/{id}")
     @ResponseBody
-    public Person getUsuario(@PathVariable("id") Long id) {
+    public User getUsuario(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
 
     @PostMapping("/user")
     @ResponseBody
-    public Person postUser(@RequestParam("email") String email, @RequestParam("password") String password) {
-        return userService.findByEmail(email, password);
+    public User createUser(@RequestBody User usuario){
+        return userService.saveUser(usuario);
+    }
+
+    @PostMapping("/user/{id}")
+    @ResponseBody
+    public User updateUser(@RequestBody User usuario, @PathVariable("id") Long id) {
+        return userService.updateUser(id, usuario);
+    }
+
+    @GetMapping("/user/{id}/deleteById")
+    @ResponseBody
+    public Boolean deleteUserById(@PathVariable("id") Long id) {
+        return userService.deleteUserById(id);
+    }
+
+    @GetMapping("/user/{id}/delete")
+    @ResponseBody
+    public Boolean deleteUser(@PathVariable("id") Long id) {
+        return userService.deleteUser(id);
     }
 
 }

@@ -20,14 +20,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/web/login.html").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/**").hasAuthority("VEEDOR");
+                .antMatchers("/veedor/**").hasAuthority("VEEDOR");
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .loginPage("/web/login.html");
+                .loginPage("/web/login");
 
-        http.logout().logoutUrl("/web/logout.html");
+        http.logout().logoutUrl("/web/logout");
 
         // turn off checking for CSRF tokens
         http.csrf().disable();
