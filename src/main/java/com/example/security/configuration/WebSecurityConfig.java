@@ -19,15 +19,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/web/login.html").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/veedor/**").hasAuthority("VEEDOR");
+                .antMatchers("/web/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/web/veedor/**").hasAuthority("VEEDOR");
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .loginPage("/web/login");
+                .loginPage("/api/login");
 
-        http.logout().logoutUrl("/web/logout");
+        http.logout().logoutUrl("/api/logout");
 
         // turn off checking for CSRF tokens
         http.csrf().disable();

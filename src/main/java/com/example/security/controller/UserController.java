@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -15,13 +16,13 @@ public class UserController {
 
     @GetMapping("/users")
     @ResponseBody
-    public List<User> getUsuarios() {
+    public List<User> getUsers() {
         return userService.getUsers();
     }
 
     @GetMapping("/user/{id}")
     @ResponseBody
-    public User getUsuario(@PathVariable("id") Long id) {
+    public User getUser(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
 
