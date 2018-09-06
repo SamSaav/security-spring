@@ -1,5 +1,7 @@
 package com.example.security.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -8,8 +10,10 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ROL_ID")
     private long id;
 
+    @Column(name = "ROL_NAME")
     private String role;
 
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
@@ -38,6 +42,7 @@ public class Role {
         this.role = role;
     }
 
+    @JsonIgnore
     public Set<User> getUsers() {
         return users;
     }
