@@ -74,6 +74,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/web/login.html").permitAll()
                 .antMatchers("/web/js/**").permitAll()
                 .antMatchers("/web/css/**").permitAll()
+                .antMatchers("/api/user").permitAll()
                 .antMatchers("/web/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/web/veedor/**").hasAuthority("VEEDOR")
                 .anyRequest().hasAuthority("ADMIN");

@@ -37,15 +37,15 @@ public class UserService {
     }
 
     public ResponseEntity<?> saveUser(String name, String lastName, String email, String password, Long role){
-        if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || role != null){
+        /*if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || role != null){
             return new ResponseEntity<>("Missing data", HttpStatus.NO_CONTENT);
         }
         if (userRepository.findByEmail(email) != null) {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
-        }
+        }*/
         User user = new User(name, lastName, email, passwordEncoder.encode(password), roleRepository.getById(role));
         userRepository.save(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     public ResponseEntity<?> updateUser(Long id, User usuario){
