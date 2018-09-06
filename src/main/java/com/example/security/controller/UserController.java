@@ -35,19 +35,19 @@ public class UserController {
 
     @PostMapping("/user/{id}")
     @ResponseBody
-    public User updateUser(@RequestBody User usuario, @PathVariable("id") Long id) {
+    public ResponseEntity<?> updateUser(@RequestBody User usuario, @PathVariable("id") Long id) {
         return userService.updateUser(id, usuario);
     }
 
     @GetMapping("/user/{id}/deleteById")
     @ResponseBody
-    public Boolean deleteUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteUserById(@PathVariable("id") Long id) {
         return userService.deleteUserById(id);
     }
 
     @GetMapping("/user/{id}/delete")
     @ResponseBody
-    public Boolean deleteUser(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
         return userService.deleteUser(id);
     }
 

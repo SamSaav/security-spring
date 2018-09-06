@@ -36,15 +36,9 @@ public class UserService {
         return user;
     }
 
-    public Map<String, Object> maps(String var, Object some){
-        Map<String, Object> dto = new LinkedHashMap<>();
-        dto.put(var, some);
-        return dto;
-    }
-
     public ResponseEntity<?> saveUser(String name, String lastName, String email, String password, Long role){
         if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || role != null){
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Missing data", HttpStatus.NO_CONTENT);
         }
         if (userRepository.findByEmail(email) != null) {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
@@ -54,32 +48,33 @@ public class UserService {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    public User updateUser(Long id, User usuario){
+    public ResponseEntity<?> updateUser(Long id, User usuario){
         if (id != null && usuario != null){
             User user = userRepository.getById(id);
-            return userRepository.save(getDataUpdateUser(user, usuario));
+            userRepository.save(getDataUpdateUser(user, usuario));
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
-            return null;
+            return new ResponseEntity<>("Missing data", HttpStatus.NO_CONTENT);
         }
     }
 
-    public boolean deleteUserById(Long id) {
+    public ResponseEntity<?> deleteUserById(Long id) {
         if (id != null){
             userRepository.deleteById(id);
-            return true;
+            return new ResponseEntity<>(maps("Deleted", true), HttpStatus.OK);
         } else {
-            return false;
+            return new ResponseEntity<>(maps("Missing data", false), HttpStatus.NO_CONTENT);
         }
 
     }
 
-    public boolean deleteUser(Long id) {
+    public ResponseEntity<?> deleteUser(Long id) {
         User user = userRepository.getById(id);
         if (id != null && user != null) {
             userRepository.delete(user);
-            return true;
+            return new ResponseEntity<>(maps("Deleted", true), HttpStatus.OK);
         } else {
-            return false;
+            return new ResponseEntity<>(maps("Missing data", false), HttpStatus.NO_CONTENT);
         }
 
     }
@@ -101,6 +96,12 @@ public class UserService {
             user.setRole(usuario.getRole());
         }
         return user;
+    }
+
+    public Map<String, Object> maps(String var, Object some){
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put(var, some);
+        return dto;
     }
 
 }
