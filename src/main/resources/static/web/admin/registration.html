@@ -39,14 +39,14 @@
             </div>
             <div>
                 <label for="RoleOptions">Role</label>
-                <select class="form-control" id="RoleOptions">
+                <select class="form-control" name="RoleOptions" id="RoleOptions">
                     <option>--</option>
-                    <option>Admin</option>
-                    <option>Watcher</option>
+                    <option name="RoleOptions" value="1">Admin</option>
+                    <option name="RoleOptions" value="2">Watcher</option>
                 </select>
             </div>
             <br>
-            <button type="submit" class="submit-button">Submit</button>
+            <button type="submit" class="submit-button" onclick="registration()">Submit</button>
         </form>
         <div class="col-xs-1 col-sm-3"></div>
     </main>
@@ -54,6 +54,7 @@
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="js/registration.js"></script>
 </body>
 <!-- Footer -->
 <br>

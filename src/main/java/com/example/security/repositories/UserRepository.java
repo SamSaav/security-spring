@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByEmail(@Param("email") String email);
+    User findByEmail(String email);
     User getById(Long id);
 
 }

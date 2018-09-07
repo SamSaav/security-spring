@@ -3,6 +3,7 @@ package com.example.security.controller;
 import com.example.security.model.User;
 import com.example.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,21 +35,23 @@ public class UserController {
     }
 
     @PostMapping("/user/{id}")
-    @ResponseBody
     public ResponseEntity<?> updateUser(@RequestBody User usuario, @PathVariable("id") Long id) {
         return userService.updateUser(id, usuario);
     }
 
     @GetMapping("/user/{id}/deleteById")
-    @ResponseBody
     public ResponseEntity<?> deleteUserById(@PathVariable("id") Long id) {
         return userService.deleteUserById(id);
     }
 
     @GetMapping("/user/{id}/delete")
-    @ResponseBody
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
         return userService.deleteUser(id);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
+        return userService.login(email, password);
     }
 
 }
