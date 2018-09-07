@@ -1,7 +1,3 @@
-function getUserRole(email){
-
-}
-
 function login(){
     'use strict';
     var email = document.getElementById('email').value;
