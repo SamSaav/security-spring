@@ -1,10 +1,10 @@
 function login(){
-    var email = document.getElementById('email');
-    var password = document.getElementById('password');
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
 
     var dto = {"email": email, "password": password};
     var json = JSON.stringify(dto);
-        var url = 'http://localhost:8083/api/login';
+        var url = 'http://localhost:8083/api/login?email='+email+'&password='+password;
         var http = new XMLHttpRequest();
 
         http.open("POST", url, true);
@@ -14,7 +14,6 @@ function login(){
                 window.location.replace('http://localhost:8083/web/admin/index.html');
             }else{
                 window.location.replace('http://localhost:8083/web/login.html');
-                document.append(document.createElement('h2').textContent = 'error');
             }
         }
         http.send(json);

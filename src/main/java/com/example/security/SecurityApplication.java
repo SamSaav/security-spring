@@ -52,10 +52,10 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
     public void init(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(inputName -> {
             User user = userRepository.findByEmail(inputName);
-            String role = user.getRole().getRole();
             if (user != null) {
+                String role = user.getRole().getRole();
                 return new org.springframework.security.core.userdetails.User
-                        (user.getEmail(), passwordEncoder.encode(user.getPassword()), AuthorityUtils.createAuthorityList(role.toUpperCase()));
+                        (user.getEmail(), user.getPassword(), AuthorityUtils.createAuthorityList(role.toUpperCase()));
             }else{
                 throw new UsernameNotFoundException("Unknown user: " + inputName);
             }
@@ -72,12 +72,13 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/web/login.html").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/web/js/**").permitAll()
                 .antMatchers("/web/css/**").permitAll()
                 .antMatchers("/api/user").permitAll()
                 .antMatchers("/web/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/web/veedor/**").hasAuthority("VEEDOR")
-                .anyRequest().hasAuthority("ADMIN");
+                .anyRequest().permitAll();
 
         http.formLogin()
                 .usernameParameter("email")
