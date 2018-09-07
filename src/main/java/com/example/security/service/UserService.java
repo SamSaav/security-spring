@@ -39,10 +39,15 @@ public class UserService {
         return user;
     }
 
+    public User getUserByEmail(String email){
+        User user = userRepository.findByEmail(email);
+        return user;
+    }
+
     public ResponseEntity<?> saveUser(String name, String lastName, String email, String password, Long role){
-        /*if (isAuth() == null){
+        if (isAuth() == null){
             return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
-        } else {*/
+        } else {
             if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || role == null){
                 return new ResponseEntity<>("Missing data", HttpStatus.NO_CONTENT);
             }
@@ -52,7 +57,7 @@ public class UserService {
             User user = new User(name, lastName, email, passwordEncoder.encode(password), roleRepository.getById(role));
             userRepository.save(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
-        //}
+        }
     }
 
     public ResponseEntity<?> updateUser(Long id, User usuario){
