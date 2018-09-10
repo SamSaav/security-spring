@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -17,19 +15,19 @@ public class UserController {
 
     @GetMapping("/users")
     @ResponseBody
-    public List<User> getUsers() {
+    public ResponseEntity<?> getUsers() {
         return userService.getUsers();
     }
 
     @GetMapping("/user/{id}")
     @ResponseBody
-    public User getUser(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
 
     @GetMapping("/userEmail")
     @ResponseBody
-    public User getUserByEmail(@RequestParam String email){
+    public ResponseEntity<?> getUserByEmail(@RequestParam String email){
         return userService.getUserByEmail(email);
     }
 
@@ -52,6 +50,11 @@ public class UserController {
     @GetMapping("/user/{id}/delete")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
         return userService.deleteUser(id);
+    }
+
+    @GetMapping("/employees")
+    public ResponseEntity<?> getAllEmployeesActive(){
+            return userService.getAllEmployeeActive();
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,25 +30,40 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<User> getUsers() {
-        List<User> lstUsers = userRepository.findAll();
-        return lstUsers;
+    @Autowired
+    private RestTemplate restTemplate;
+
+    public ResponseEntity<?> getUsers() {
+        if (isAuth() == null){
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1){
+            List<User> lstUsers = userRepository.findAll();
+            return new ResponseEntity<>(lstUsers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+        }
     }
 
-    public User getUser(Long id) {
-        User user = userRepository.getById(id);
-        return user;
+    public ResponseEntity<?> getUser(Long id) {
+        if (isAuth() == null){
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1){
+            User user = userRepository.getById(id);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+        }
     }
 
-    public User getUserByEmail(String email){
+    public ResponseEntity<?> getUserByEmail(String email){
         User user = userRepository.findByEmail(email);
-        return user;
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     public ResponseEntity<?> saveUser(String name, String lastName, String email, String password, Long role){
         if (isAuth() == null){
             return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
-        } else {
+        } else if (getRole(isAuth()) == 1){
             if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || role == null){
                 return new ResponseEntity<>("Missing data", HttpStatus.NO_CONTENT);
             }
@@ -57,54 +73,66 @@ public class UserService {
             User user = new User(name, lastName, email, passwordEncoder.encode(password), roleRepository.getById(role));
             userRepository.save(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
         }
     }
 
     public ResponseEntity<?> updateUser(Long id, User usuario){
-        if (id != null && usuario != null){
-            User user = userRepository.getById(id);
-            userRepository.save(getDataUpdateUser(user, usuario));
-            return new ResponseEntity<>(HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>("Missing data", HttpStatus.NO_CONTENT);
+        if (isAuth() == null) {
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1) {
+            if (id != null && usuario != null){
+                User user = userRepository.getById(id);
+                userRepository.save(getDataUpdateUser(user, usuario));
+                return new ResponseEntity<>(HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("Missing data", HttpStatus.NO_CONTENT);
+            }
+        } else {
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
         }
     }
 
     public ResponseEntity<?> deleteUserById(Long id) {
-        if (id != null){
-            userRepository.deleteById(id);
-            return new ResponseEntity<>(maps("Deleted", true), HttpStatus.OK);
+        if (isAuth() == null) {
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1) {
+            if (id != null){
+                userRepository.deleteById(id);
+                return new ResponseEntity<>(maps("Deleted", true), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(maps("Missing data", false), HttpStatus.NO_CONTENT);
+            }
         } else {
-            return new ResponseEntity<>(maps("Missing data", false), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
         }
 
     }
 
     public ResponseEntity<?> deleteUser(Long id) {
-        User user = userRepository.getById(id);
-        if (id != null && user != null) {
-            userRepository.delete(user);
-            return new ResponseEntity<>(maps("Deleted", true), HttpStatus.OK);
+        if (isAuth() == null) {
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1) {
+            User user = userRepository.getById(id);
+            if (id != null && user != null) {
+                userRepository.delete(user);
+                return new ResponseEntity<>(maps("Deleted", true), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(maps("Missing data", false), HttpStatus.NO_CONTENT);
+            }
         } else {
-            return new ResponseEntity<>(maps("Missing data", false), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
         }
 
     }
 
-    public ResponseEntity<?> login(String email, String password){
-        Map<String, Object> dto = new LinkedHashMap<>();
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
-            dto.put("email", user.getEmail());
+    public ResponseEntity<?> getAllEmployeeActive() {
+        if (isAuth() == null) {
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
         } else {
-            dto.put("email", null);
-        }
-        if (email.isEmpty() || password.isEmpty()) {
-            return new ResponseEntity<>(maps("Missing data", dto), HttpStatus.NO_CONTENT);
-        } else if (passwordEncoder.encode(password) != user.getPassword()) {
-            return new ResponseEntity<>(maps("The password is wrong", dto), HttpStatus.FORBIDDEN);
-        } else {
-            return new ResponseEntity<>(dto, HttpStatus.OK);
+            String url = "http://ms-empleado/active";
+            return new ResponseEntity<>(maps("employee", restTemplate.getForObject(url, Object.class)), HttpStatus.OK);
         }
     }
 
@@ -118,7 +146,7 @@ public class UserService {
         if (usuario.getEmail() != null && user.getEmail() != usuario.getEmail()) {
             user.setEmail(usuario.getEmail());
         }
-        if (usuario.getPassword() != null && passwordEncoder.encode(user.getPassword() ) != passwordEncoder.encode(usuario.getPassword())) {
+        if (usuario.getPassword() != null && user.getPassword() != passwordEncoder.encode(usuario.getPassword())) {
             user.setPassword(passwordEncoder.encode(usuario.getPassword()));
         }
         if (usuario.getRole() != null && user.getRole() != usuario.getRole()) {
@@ -140,6 +168,12 @@ public class UserService {
         } else {
             return authentication.getName();
         }
+    }
+
+    private Long getRole(String email){
+        User user = userRepository.findByEmail(email);
+        Role role = user.getRole();
+        return role.getId();
     }
 
 }

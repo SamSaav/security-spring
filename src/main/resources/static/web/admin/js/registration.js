@@ -13,10 +13,11 @@ function registration() {
     http.open("POST", url,true);
     http.setRequestHeader('Content-Type', 'application/json');
     http.onload = function () {
-        if (http.readyState === 4 && http.status === 200) {
+        if (http.readyState === 4 && http.status === 201) {
             window.location.replace('http://localhost:8083/web/admin/index.html');
         }else{
-            window.location.replace('http://localhost:8083/web/registration.html');
+            alert("The registration fail");
+            window.location.replace('http://localhost:8083/web/admin/registration.html');
         }
     }
     http.send(json);
