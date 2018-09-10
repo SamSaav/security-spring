@@ -3,23 +3,29 @@ package com.example.security.model;
 import javax.persistence.*;
 
 @Entity
-public class Person {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "USR_ID")
     private long id;
+
+    @Column(name = "USR_FNAME")
     private String name;
+    @Column(name = "USR_LNAME")
     private String lastName;
+    @Column(name = "USR_EMAIL")
     private String email;
+    @Column(name = "USR_PASSWD")
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "USR_ROLE")
     private Role role;
 
-    public Person(){}
+    public User(){}
 
-    public Person(String name, String lastName, String email, String password, Role role) {
+    public User(String name, String lastName, String email, String password, Role role) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
