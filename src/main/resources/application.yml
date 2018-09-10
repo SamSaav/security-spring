@@ -26,4 +26,4 @@ spring:
     password: SaAm_4106
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
