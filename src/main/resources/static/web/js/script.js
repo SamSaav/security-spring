@@ -1,4 +1,4 @@
-function script(){
+function login(){
     'use strict';
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
