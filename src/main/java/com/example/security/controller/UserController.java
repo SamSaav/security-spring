@@ -27,6 +27,12 @@ public class UserController {
         return userService.getUser(id);
     }
 
+    @GetMapping("/userEmail")
+    @ResponseBody
+    public User getUserByEmail(@RequestParam String email){
+        return userService.getUserByEmail(email);
+    }
+
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestParam String name, @RequestParam String lastName,
                                              @RequestParam String email, @RequestParam String password, @RequestParam Long role){
@@ -34,19 +40,16 @@ public class UserController {
     }
 
     @PostMapping("/user/{id}")
-    @ResponseBody
     public ResponseEntity<?> updateUser(@RequestBody User usuario, @PathVariable("id") Long id) {
         return userService.updateUser(id, usuario);
     }
 
     @GetMapping("/user/{id}/deleteById")
-    @ResponseBody
     public ResponseEntity<?> deleteUserById(@PathVariable("id") Long id) {
         return userService.deleteUserById(id);
     }
 
     @GetMapping("/user/{id}/delete")
-    @ResponseBody
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
         return userService.deleteUser(id);
     }
