@@ -13,6 +13,7 @@ function login(){
             'use strict';
             var user = request.response;
             role = user.role.role;
+
         } else {
             role = 'INVALID';
         }
@@ -30,7 +31,6 @@ function login(){
     http.setRequestHeader('Content-Type', 'application/json');
     http.onload = function () {
         if (http.readyState === 4 && http.status === 200) {
-            //var role = getUserRole(email);
             if (role === 'ADMIN'){
                 window.location.replace('http://localhost:8083/web/admin/index.html');
             } else if (role === 'VEEDOR'){
