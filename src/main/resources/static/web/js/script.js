@@ -13,7 +13,7 @@ function login(){
             'use strict';
             var user = request.response;
             role = user.role.role;
-
+            accessLogin(email, password, role);
         } else {
             role = 'INVALID';
         }
@@ -21,13 +21,13 @@ function login(){
     }
     request.send()
 
+}
 
-    var dto = {"email": email, "password": password};
-    var json = JSON.stringify(dto);
-    var POSTurl = 'http://localhost:8083/api/login?email='+email+'&password='+password;
+function accessLogin(email, password, role) {
+    var url = 'http://localhost:8083/api/login?email='+email+'&password='+password;
     var http = new XMLHttpRequest();
 
-    http.open("POST", POSTurl, true);
+    http.open("POST", url, true);
     http.setRequestHeader('Content-Type', 'application/json');
     http.onload = function () {
         if (http.readyState === 4 && http.status === 200) {
@@ -42,7 +42,25 @@ function login(){
             window.location.replace('http://localhost:8083/web/login.html');
         }
     }
-    http.send(json);
+    http.send();
+}
+
+function logout() {
+    'use strict';
+    var url = "http://localhost:8083/api/logout";
+    var http = new XMLHttpRequest();
+
+    http.open("GET", url, true);
+    http.responseType = 'json';
+    http.send();
+
+    http.onload = function () {
+        if (http.readyState === 4 && http.status === 200){
+            window.location.replace('http://localhost:8083/web/login.html');
+        } else {
+            alert('Log out Fail');
+        }
+    }
 }
 
 
