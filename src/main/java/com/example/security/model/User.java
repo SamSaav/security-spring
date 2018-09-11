@@ -1,6 +1,8 @@
 package com.example.security.model;
 
 import javax.persistence.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Entity
 public class User {
@@ -79,5 +81,16 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Map<String, Object> userDTO(){
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("id", this.id);
+        dto.put("name", this.name);
+        dto.put("lastName", this.lastName);
+        dto.put("email", this.email);
+        dto.put("password", this.password);
+        dto.put("role", this.role);
+        return dto;
     }
 }

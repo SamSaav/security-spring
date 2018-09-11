@@ -16,13 +16,13 @@ public class UserController {
     @GetMapping("/users")
     @ResponseBody
     public ResponseEntity<?> getUsers() {
-        return userService.getUsers();
+        return userService.allTheInformation(userService.getUsersDTO(userService.getUsers()));
     }
 
     @GetMapping("/user/{id}")
     @ResponseBody
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
-        return userService.getUser(id);
+        return userService.getUserDTO(userService.getUser(id));
     }
 
     @GetMapping("/userEmail")

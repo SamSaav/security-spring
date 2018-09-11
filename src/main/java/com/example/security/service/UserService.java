@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -33,25 +34,35 @@ public class UserService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public ResponseEntity<?> getUsers() {
+    public List<User> getUsers() {
+        List<User> lstUsers = userRepository.findAll();
+        return lstUsers;
+    }
+
+    public List<Object> getUsersDTO(List<User> users){
+        List<Object> lstUsers = users.stream().map(s -> s.userDTO()).collect(Collectors.toList());
+        return lstUsers;
+    }
+
+    public ResponseEntity<?> allTheInformation(List<Object> users){
         if (isAuth() == null){
-            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1){
-            List<User> lstUsers = userRepository.findAll();
-            return new ResponseEntity<>(lstUsers, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } else {
-            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+            Object info = maps("users", users);
+            return new ResponseEntity<>(info, HttpStatus.OK);
         }
     }
 
-    public ResponseEntity<?> getUser(Long id) {
+    public User getUser(Long id){
+        User user = userRepository.getById(id);
+        return user;
+    }
+
+    public ResponseEntity<?> getUserDTO(User user) {
         if (isAuth() == null){
             return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1){
-            User user = userRepository.getById(id);
-            return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(user.userDTO(), HttpStatus.OK);
         }
     }
 
