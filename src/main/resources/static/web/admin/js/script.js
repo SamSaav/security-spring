@@ -18,7 +18,9 @@ function tabla(jsonObj) {
 	var main = document.getElementById('myMain');
 
 	var div = document.createElement('div');
+	div.setAttribute('class', 'table-responsive');
 	var table = document.createElement('table');
+	table.setAttribute('class', 'table');
 	var tr = document.createElement('tr');
 	var th1 = document.createElement('th');
 	th1.setAttribute('class', 'col-xs-1');
@@ -93,7 +95,7 @@ function tabla(jsonObj) {
 		td3.textContent = users[i].lastName;
 		td4.textContent = users[i].email;
 		td5.textContent = users[i].role.role;
-		td6.textContent = '1';
+		td6.textContent = users[i].active;
 		button1.textContent = 'Edit';
 		button2.textContent = 'Delete';
 		formEdit.append(inputEdit);

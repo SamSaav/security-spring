@@ -78,9 +78,9 @@ public class UserService {
     }
 
     public ResponseEntity<?> saveUser(String name, String lastName, String email, String password, Long role){
-        if (isAuth() == null){
+        /*if (isAuth() == null){
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1){
+        } else if (getRole(isAuth()) == 1){*/
             if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || role == null){
                 return new ResponseEntity<>("Sin contenido", HttpStatus.NO_CONTENT);
             }
@@ -90,9 +90,9 @@ public class UserService {
             User user = new User(name, lastName, email, passwordEncoder.encode(password), roleRepository.getById(role));
             userRepository.save(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
-        } else {
+        /*} else {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        }
+        }*/
     }
 
     public ResponseEntity<?> updateUser(Long id, User usuario){
