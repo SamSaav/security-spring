@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,13 @@ public class UserService {
     private RestTemplate restTemplate;
 
     public List<User> getUsers() {
-        List<User> lstUsers = userRepository.findAll();
-        return lstUsers;
+        List<User> users = new ArrayList<>();
+
+        if(getRole(isAuth())==1){
+        users = userRepository.findAll();
+        return users;}
+
+        return users= userRepository.findAll().stream().filter(u->u.getActive()==true).collect(Collectors.toList());
     }
 
     public List<Object> getUsersDTO(List<User> users){
@@ -110,8 +116,10 @@ public class UserService {
             return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
         } else if (getRole(isAuth()) == 1) {
             if (id != null){
-                userRepository.deleteById(id);
-                return new ResponseEntity<>(maps("Deleted", true), HttpStatus.OK);
+                User user = userRepository.findById(id).get();
+                user.changeActive();
+                userRepository.save(user);
+                return new ResponseEntity<>(maps("Temporarily deleted", true), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(maps("Missing data", false), HttpStatus.NO_CONTENT);
             }
@@ -122,6 +130,24 @@ public class UserService {
     }
 
     public ResponseEntity<?> deleteUser(Long id) {
+        if (isAuth() == null) {
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1) {
+            User user = userRepository.getById(id);
+            if (id != null && user != null) {
+                user.changeActive();
+                userRepository.save(user);
+                return new ResponseEntity<>(maps("Temporarily deleted", true), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(maps("Missing data", false), HttpStatus.NO_CONTENT);
+            }
+        } else {
+            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+        }
+
+    }
+
+    public ResponseEntity<?> permanentDeleteUser(Long id) {
         if (isAuth() == null) {
             return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
         } else if (getRole(isAuth()) == 1) {

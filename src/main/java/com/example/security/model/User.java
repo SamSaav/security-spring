@@ -21,6 +21,9 @@ public class User {
     @Column(name = "USR_PASSWD")
     private String password;
 
+    @Column(name = "USR_ACTIVE")
+    private Boolean active;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USR_ROLE")
     private Role role;
@@ -33,6 +36,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.active= true;
     }
 
     public long getId() {
@@ -83,6 +87,21 @@ public class User {
         this.role = role;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public void changeActive(){
+        if (this.active==true){
+            this.active = false;}
+        else this.active= true;
+
+    }
+
     public Map<String, Object> userDTO(){
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.id);
@@ -91,6 +110,7 @@ public class User {
         dto.put("email", this.email);
         dto.put("password", this.password);
         dto.put("role", this.role);
+        dto.put("active", this.active);
         return dto;
     }
 }
