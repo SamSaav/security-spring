@@ -71,15 +71,21 @@ function tabla(jsonObj) {
 		td6.setAttribute('class', 'col-xs-1');
 		var td7 = document.createElement('td');
 		td7.setAttribute('class', 'col-xs-3');
+		var formEdit = document.createElement('form');
+		formEdit.setAttribute('method', 'POST');
+		var inputEdit = document.createElement('input');
+		inputEdit.setAttribute('type', 'hidden');
+		inputEdit.setAttribute('value', users[i].id);
+		inputEdit.setAttribute('id', 'userId');
 		var button1 = document.createElement('button');
 		button1.setAttribute('type', 'button');
-		button1.setAttribute('onlick', 'button');
-		button1.setAttribute('value', 'Edit');
+		button1.setAttribute('onclick', 'buttonEdit('+users[i].id+')');
+		button1.setAttribute('id', 'edit');
 		button1.setAttribute('class', 'btn btn-default');
 		var button2 = document.createElement('button');
 		button2.setAttribute('type', 'button');
-		button2.setAttribute('onlick', 'button');
-		button2.setAttribute('value', 'Delete');
+		button2.setAttribute('onclick', 'buttonDelete('+users[i].id+')');
+		button2.setAttribute('id', 'delete');
 		button2.setAttribute('class', 'btn btn-danger');
 
 		td1.textContent = users[i].id;
@@ -90,7 +96,9 @@ function tabla(jsonObj) {
 		td6.textContent = '1';
 		button1.textContent = 'Edit';
 		button2.textContent = 'Delete';
-		td7.append(button1);
+		formEdit.append(inputEdit);
+		formEdit.append(button1);
+		td7.append(formEdit);
 		td7.append(button2);
 
 
@@ -110,4 +118,44 @@ function tabla(jsonObj) {
 
 	main.append(div);
 
+}
+
+function registration() {
+    var name = document.getElementById("firstName").value;
+    var lastName = document.getElementById("lastName").value;
+    var email = document.getElementById("userEmail").value;
+    var password = document.getElementById("userPassword").value;
+    var confPassword = document.getElementById("userConfirmPassword").value;
+    var role = document.getElementById("RoleOptions").value;
+
+    if (password === confPassword) {
+        var url = 'http://localhost:8083/api/user?name='+name+'&lastName='+lastName+'&email='+email+'&password='+password+'&role='+role;
+        var http = new XMLHttpRequest();
+
+        var json = JSON.stringify();
+
+        http.open("POST", url,true);
+        http.setRequestHeader('Content-Type', 'application/json');
+        http.onload = function () {
+            if (http.readyState === 4 && http.status === 201) {
+                window.location.replace('http://localhost:8083/web/admin/index.html');
+            }else{
+                alert("The registration fail");
+                window.location.replace('http://localhost:8083/web/admin/registration.html');
+            }
+        }
+        http.send(json);
+    } else {
+        window.location.replace('http://localhost:8083/web/admin/update.');
+    }
+}
+
+function buttonEdit(id) {
+	sessionStorage.setItem("userId", id);
+	window.location.replace('http://localhost:8083/web/admin/update.html');
+}
+
+function buttonDelete(id) {
+	sessionStorage.setItem("userId", id);
+	window.location.replace();
 }

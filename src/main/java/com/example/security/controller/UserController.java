@@ -37,7 +37,7 @@ public class UserController {
         return userService.saveUser(name, lastName, email, password, role);
     }
 
-    @PostMapping("/user/{id}")
+    @PostMapping("/user/{id}") //cambiar por un put
     public ResponseEntity<?> updateUser(@RequestBody User usuario, @PathVariable("id") Long id) {
         return userService.updateUser(id, usuario);
     }
