@@ -62,9 +62,14 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
         auth.userDetailsService(inputName -> {
             User user = userRepository.findByEmail(inputName);
             if (user != null) {
-                String role = user.getRole().getRole();
-                return new org.springframework.security.core.userdetails.User
-                        (user.getEmail(), user.getPassword(), AuthorityUtils.createAuthorityList(role.toUpperCase()));
+                Boolean active = user.getActive();
+                if (active){
+                    String role = user.getRole().getRole();
+                    return new org.springframework.security.core.userdetails.User
+                            (user.getEmail(), user.getPassword(), AuthorityUtils.createAuthorityList(role.toUpperCase()));
+                }else{
+                    throw new UsernameNotFoundException("Unknown user: " + inputName);
+                }
             }else{
                 throw new UsernameNotFoundException("Unknown user: " + inputName);
             }

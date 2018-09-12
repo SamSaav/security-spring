@@ -14,3 +14,8 @@ html,body{
 .navbar-right{
 	margin-right: 1%;
 }
+
+.jumbotron {
+	background-color: #003000;
+	color: white;
+}
