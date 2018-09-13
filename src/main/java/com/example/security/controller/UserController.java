@@ -37,22 +37,22 @@ public class UserController {
         return userService.saveUser(name, lastName, email, password, role);
     }
 
-    @PostMapping("/user/{id}") //cambiar por un put
+    @PutMapping("/user/{id}") //cambiar por un put
     public ResponseEntity<?> updateUser(@RequestBody User usuario, @PathVariable("id") Long id) {
         return userService.updateUser(id, usuario);
     }
 
-    @GetMapping("/user/{id}/deleteById")
+    /*@GetMapping("/user/{id}/deleteById")
     public ResponseEntity<?> deleteUserById(@PathVariable("id") Long id) {
         return userService.deleteUserById(id);
-    }
+    }*/
 
-    @GetMapping("/user/{id}/delete")
+    @PutMapping("/user/{id}/delete")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
         return userService.deleteUser(id);
     }
 
-    @GetMapping("/user/{id}/permanentDelete")
+    @DeleteMapping("/user/{id}/permanentDelete")
     public ResponseEntity<?> permanentDeleteUser(@PathVariable("id") Long id) {
         return userService.permanentDeleteUser(id);
     }
