@@ -8,11 +8,29 @@ http.onload = function () {
     if (http.readyState === 4 && http.status === 200) {
         'use strict';
         var users = http.response;
-        tabla(users);
+        tablaUsers(users);
+        getEmployee();
     }
 };
 
-function tabla(jsonObj) {
+function getEmployee () {
+	'use strict';
+	var empUrl = 'http://localhost:8083/api/employees';
+	var xhr = new XMLHttpRequest();
+
+	xhr.open("GET", empUrl, true);
+	xhr.responseType = 'json';
+	xhr.send();
+	xhr.onload = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			'use strict';
+			var employees = xhr.response;
+			tablaEmployee(employees);
+		}
+	}
+}
+
+function tablaUsers(jsonObj) {
     'use strict';
 
     var bodyUsers = document.getElementById('bodyUsers');
@@ -52,11 +70,51 @@ function tabla(jsonObj) {
 
     bodyUsers.append(tr2);
 
-    div.append(bodyUsers);
+}
 
-	main.append(div1);
-	main.append(div);
-	main.append(div2);
+function tablaEmployee(jsonObj) {
+    'use strict';
+
+    var bodyEmployee = document.getElementById('bodyEmployee');
+
+    var users = jsonObj.employee;
+
+	for (var i = 0; i < 5; i++) {
+		var tr1 = document.createElement('tr');
+		var td2 = document.createElement('td');
+		td2.setAttribute('class', 'col-xs-2');
+		var td3 = document.createElement('td');
+		td3.setAttribute('class', 'col-xs-2');
+		var td4 = document.createElement('td');
+		td4.setAttribute('class', 'col-xs-2');
+		var td5 = document.createElement('td');
+		td5.setAttribute('class', 'col-xs-2');
+
+		td2.textContent = users[i].name;
+		td3.textContent = users[i].lastName;
+		td4.textContent = users[i].project;
+		td5.textContent = users[i].client;
+
+        tr1.append(td2);
+        tr1.append(td3);
+        tr1.append(td4);
+        tr1.append(td5);
+
+        bodyEmployee.append(tr1);
+
+    }
+
+    var tr2 = document.createElement('tr');
+    var button = document.createElement('button');
+    button.setAttribute('type', 'button');
+    button.setAttribute('class', 'btn btn-dark');
+    button.setAttribute('onclick', 'movePage(users)');
+
+    button.textContent = 'See more';
+
+    tr2.append(button);
+
+    bodyEmployee.append(tr2);
 
 }
 

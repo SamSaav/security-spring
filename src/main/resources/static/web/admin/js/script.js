@@ -163,6 +163,18 @@ function buttonEdit(id) {
 }
 
 function buttonDelete(id) {
-    sessionStorage.setItem("userId", id);
-    window.location.replace();
+    var url = "http://localhost:8083/api/user/"+id+"/delete";
+    var http = new XMLHttpRequest();
+
+    http.open("DELETE", url, true);
+    http.onload = function () {
+    	if (http.readyState === 4 && http.status === 200) {
+    		window.location.replace('http://localhost:8083/web/admin/index.html');
+    	} else {
+    		alert('Fail');
+    		window.location.replace('http://localhost:8083/web/admin/users.html');
+    	}
+    }
+
+    http.send();
 }

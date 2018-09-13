@@ -60,7 +60,7 @@ function update() {
 
         var json = JSON.stringify(dto);
 
-        http.open("POST", url, true);
+        http.open("PUT", url, true);
         http.setRequestHeader('Content-Type', 'application/json');
         http.onload = function () {
             if (http.readyState === 4 && http.status === 200) {
@@ -80,7 +80,7 @@ function update() {
 
         var json = JSON.stringify(dto);
 
-        http.open("POST", url, true);
+        http.open("PUT", url, true);
         http.setRequestHeader('Content-Type', 'application/json');
         http.onload = function () {
             if (http.readyState === 4 && http.status === 200) {
