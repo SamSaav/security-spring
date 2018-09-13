@@ -1,19 +1,23 @@
-h1{
-  text-align: center;
+h1 {
+    text-align: center;
 }
+
 body {
-  margin: 0;
-  padding: 0;
-  background-color: white;
-  height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    height: 100vh;
 }
+
 #login .container #login-row #login-column #login-box {
-  border: 1px solid #9C9C9C;
-  background-color: #eeeeee;
+    border: 1px solid #9C9C9C;
+    background-color: #eeeeee;
 }
+
 #login .container #login-row #login-column #login-box #login-form {
-  padding: 20px;
+    padding: 20px;
 }
+
 #login .container #login-row #login-column #login-box #login-form #register-link {
-  margin-top: -85px;
+    margin-top: -85px;
 }

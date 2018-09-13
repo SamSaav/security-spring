@@ -1,5 +1,5 @@
 var userId = sessionStorage.getItem("userId");
-var url = 'http://localhost:8083/api/user/'+userId;
+var url = 'http://localhost:8083/api/user/' + userId;
 var http = new XMLHttpRequest();
 
 http.open("GET", url, true);
@@ -53,40 +53,40 @@ function update() {
     }
 
     if (password === null) {
-        var url = 'http://localhost:8083/api/user/'+id;
+        var url = 'http://localhost:8083/api/user/' + id;
         var http = new XMLHttpRequest();
 
         var dto = {"name": name, "lastName": lastName, "email": email, "password": password, "role": role};
 
         var json = JSON.stringify(dto);
 
-        http.open("POST", url,true);
+        http.open("POST", url, true);
         http.setRequestHeader('Content-Type', 'application/json');
         http.onload = function () {
             if (http.readyState === 4 && http.status === 200) {
                 sessionStorage.removeItem("userId");
                 window.location.replace('http://localhost:8083/web/admin/index.html');
-            }else{
+            } else {
                 alert("The update fail");
                 window.location.replace('http://localhost:8083/web/admin/update.html');
             }
         }
         http.send(json);
     } else if (password === confPassword) {
-        var url = 'http://localhost:8083/api/user/'+id;
+        var url = 'http://localhost:8083/api/user/' + id;
         var http = new XMLHttpRequest();
 
         var dto = {"name": name, "lastName": lastName, "email": email, "password": password, "role": role};
 
         var json = JSON.stringify(dto);
 
-        http.open("POST", url,true);
+        http.open("POST", url, true);
         http.setRequestHeader('Content-Type', 'application/json');
         http.onload = function () {
             if (http.readyState === 4 && http.status === 200) {
                 sessionStorage.removeItem("userId");
                 window.location.replace('http://localhost:8083/web/admin/index.html');
-            }else{
+            } else {
                 alert("The registration fail");
                 window.location.replace('http://localhost:8083/web/admin/update.html');
             }

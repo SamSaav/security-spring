@@ -28,7 +28,8 @@ public class User {
     @JoinColumn(name = "USR_ROLE")
     private Role role;
 
-    public User(){}
+    public User() {
+    }
 
     public User(String name, String lastName, String email, String password, Role role) {
         this.name = name;
@@ -36,7 +37,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.active= true;
+        this.active = true;
     }
 
     public long getId() {
@@ -95,14 +96,14 @@ public class User {
         this.active = active;
     }
 
-    public void changeActive(){
-        if (this.active==true){
-            this.active = false;}
-        else this.active= true;
+    public void changeActive() {
+        if (this.active == true) {
+            this.active = false;
+        } else this.active = true;
 
     }
 
-    public Map<String, Object> userDTO(){
+    public Map<String, Object> userDTO() {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.id);
         dto.put("name", this.name);

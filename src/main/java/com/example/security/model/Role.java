@@ -19,7 +19,8 @@ public class Role {
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private Set<User> users;
 
-    public Role(){}
+    public Role() {
+    }
 
     public Role(String role, Set<User> users) {
         this.role = role;

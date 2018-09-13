@@ -63,14 +63,14 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
             User user = userRepository.findByEmail(inputName);
             if (user != null) {
                 Boolean active = user.getActive();
-                if (active){
+                if (active) {
                     String role = user.getRole().getRole();
                     return new org.springframework.security.core.userdetails.User
                             (user.getEmail(), user.getPassword(), AuthorityUtils.createAuthorityList(role.toUpperCase()));
-                }else{
+                } else {
                     throw new UsernameNotFoundException("Unknown user: " + inputName);
                 }
-            }else{
+            } else {
                 throw new UsernameNotFoundException("Unknown user: " + inputName);
             }
         });

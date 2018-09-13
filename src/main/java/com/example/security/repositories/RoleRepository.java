@@ -9,6 +9,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
     Role findByRole(@Param("role") String role);
+
     Role getById(Long id);
 
 }

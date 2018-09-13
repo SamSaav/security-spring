@@ -27,13 +27,13 @@ public class UserController {
 
     @GetMapping("/userEmail")
     @ResponseBody
-    public ResponseEntity<?> getUserByEmail(@RequestParam String email){
+    public ResponseEntity<?> getUserByEmail(@RequestParam String email) {
         return userService.getUserByEmail(email);
     }
 
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestParam String name, @RequestParam String lastName,
-                                             @RequestParam String email, @RequestParam String password, @RequestParam Long role){
+                                        @RequestParam String email, @RequestParam String password, @RequestParam Long role) {
         return userService.saveUser(name, lastName, email, password, role);
     }
 
@@ -56,9 +56,10 @@ public class UserController {
     public ResponseEntity<?> permanentDeleteUser(@PathVariable("id") Long id) {
         return userService.permanentDeleteUser(id);
     }
+
     @GetMapping("/employees")
-    public ResponseEntity<?> getAllEmployeesActive(){
-            return userService.getAllEmployeeActive();
+    public ResponseEntity<?> getAllEmployeesActive() {
+        return userService.getAllEmployeeActive();
     }
 
 }

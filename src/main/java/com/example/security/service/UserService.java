@@ -36,74 +36,72 @@ public class UserService {
     private RestTemplate restTemplate;
 
     public List<User> getUsers() {
-        List<User> users = new ArrayList<>();
 
-        if(getRole(isAuth())==1){
-        users = userRepository.findAll();
-        return users;}
-
-        return users= userRepository.findAll().stream().filter(u->u.getActive()==true).collect(Collectors.toList());
+        if (getRole(isAuth()) == 1) {
+            return userRepository.findAll();
+        }
+        return userRepository.findAll().stream().filter(u -> u.getActive() == true).collect(Collectors.toList());
     }
 
-    public List<Object> getUsersDTO(List<User> users){
+    public List<Object> getUsersDTO(List<User> users) {
         List<Object> lstUsers = users.stream().map(s -> s.userDTO()).collect(Collectors.toList());
         return lstUsers;
     }
 
-    public ResponseEntity<?> allTheInformation(List<Object> users){
-        if (isAuth() == null){
-            return new ResponseEntity<>("No autorizado",HttpStatus.FORBIDDEN);
+    public ResponseEntity<?> allTheInformation(List<Object> users) {
+        if (isAuth() == null) {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
         } else {
             Object info = maps("users", users);
             return new ResponseEntity<>(info, HttpStatus.OK);
         }
     }
 
-    public User getUser(Long id){
+    public User getUser(Long id) {
         User user = userRepository.getById(id);
         return user;
     }
 
     public ResponseEntity<?> getUserDTO(User user) {
-        if (isAuth() == null){
+        if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
         } else {
             return new ResponseEntity<>(user.userDTO(), HttpStatus.OK);
         }
     }
 
-    public ResponseEntity<?> getUserByEmail(String email){
+    public ResponseEntity<?> getUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> saveUser(String name, String lastName, String email, String password, Long role){
+    public ResponseEntity<?> saveUser(String name, String lastName, String email, String password, Long role) {
         /*if (isAuth() == null){
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
         } else if (getRole(isAuth()) == 1){*/
-            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || role == null){
-                return new ResponseEntity<>("Sin contenido", HttpStatus.NO_CONTENT);
-            }
-            if (userRepository.findByEmail(email) != null) {
-                return new ResponseEntity<>("Nombre en uso", HttpStatus.FORBIDDEN);
-            }
-            User user = new User(name, lastName, email, passwordEncoder.encode(password), roleRepository.getById(role));
-            userRepository.save(user);
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || role == null) {
+            return new ResponseEntity<>("Sin contenido", HttpStatus.NO_CONTENT);
+        }
+        if (userRepository.findByEmail(email) != null) {
+            return new ResponseEntity<>("Nombre en uso", HttpStatus.FORBIDDEN);
+        }
+        User user = new User(name, lastName, email, passwordEncoder.encode(password), roleRepository.getById(role));
+        userRepository.save(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
         /*} else {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
         }*/
     }
 
-    public ResponseEntity<?> updateUser(Long id, User usuario){
+    public ResponseEntity<?> updateUser(Long id, User usuario) {
         if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
         } else if (getRole(isAuth()) == 1) {
-            if (id != null && usuario != null){
+            if (id != null && usuario != null) {
                 User user = userRepository.getById(id);
                 userRepository.save(getDataUpdateUser(user, usuario));
                 return new ResponseEntity<>(HttpStatus.OK);
-            }else{
+            } else {
                 return new ResponseEntity<>("Sin contenido", HttpStatus.NO_CONTENT);
             }
         } else {
@@ -115,7 +113,7 @@ public class UserService {
         if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
         } else if (getRole(isAuth()) == 1) {
-            if (id != null){
+            if (id != null) {
                 User user = userRepository.findById(id).get();
                 user.changeActive();
                 userRepository.save(user);
@@ -173,7 +171,7 @@ public class UserService {
         }
     }
 
-    public User getDataUpdateUser(User user, User usuario){
+    public User getDataUpdateUser(User user, User usuario) {
         if (usuario.getName() != null && user.getName() != usuario.getName()) {
             user.setName(usuario.getName());
         }
@@ -192,13 +190,13 @@ public class UserService {
         return user;
     }
 
-    public Map<String, Object> maps(String var, Object some){
+    public Map<String, Object> maps(String var, Object some) {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put(var, some);
         return dto;
     }
 
-    private String isAuth(){
+    private String isAuth() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return null;
@@ -207,7 +205,7 @@ public class UserService {
         }
     }
 
-    private Long getRole(String email){
+    private Long getRole(String email) {
         User user = userRepository.findByEmail(email);
         Role role = user.getRole();
         return role.getId();
