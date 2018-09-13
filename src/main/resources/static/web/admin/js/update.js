@@ -68,7 +68,7 @@ function update() {
                 window.location.replace('http://localhost:8083/web/admin/index.html');
             } else {
                 alert("The update fail");
-                window.location.replace('http://localhost:8083/web/admin/update.html');
+                window.location.replace('http://localhost:8083/web/admin/userUpdate.html');
             }
         }
         http.send(json);
@@ -88,11 +88,11 @@ function update() {
                 window.location.replace('http://localhost:8083/web/admin/index.html');
             } else {
                 alert("The registration fail");
-                window.location.replace('http://localhost:8083/web/admin/update.html');
+                window.location.replace('http://localhost:8083/web/admin/userUpdate.html');
             }
         }
         http.send(json);
     } else {
-        window.location.replace('http://localhost:8083/web/admin/update.html');
+        window.location.replace('http://localhost:8083/web/admin/userUpdate.html');
     }
 }

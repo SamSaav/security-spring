@@ -17,33 +17,38 @@ function tabla(jsonObj) {
 
     var main = document.getElementById('myMain');
 
-    var div = document.createElement('div');
-    div.setAttribute('class', 'table-responsive');
-    var table = document.createElement('table');
-    table.setAttribute('class', 'table');
-    var tr = document.createElement('tr');
-    var th1 = document.createElement('th');
-    th1.setAttribute('class', 'col-xs-1');
-    var th2 = document.createElement('th');
-    th2.setAttribute('class', 'col-xs-2');
-    var th3 = document.createElement('th');
-    th3.setAttribute('class', 'col-xs-2');
-    var th4 = document.createElement('th');
-    th4.setAttribute('class', 'col-xs-2');
-    var th5 = document.createElement('th');
-    th5.setAttribute('class', 'col-xs-1');
-    var th6 = document.createElement('th');
-    th6.setAttribute('class', 'col-xs-1');
-    var th7 = document.createElement('th');
-    th7.setAttribute('class', 'col-xs-3');
+	var div1 = document.createElement('div');
+	div1.setAttribute('class', 'col-md-1');
+	var div2 = document.createElement('div');
+	div2.setAttribute('class', 'col-md-1');
+	var div = document.createElement('div');
+	div.setAttribute('class', 'table-responsive col-md-10');
+	var table = document.createElement('table');
+	table.setAttribute('class', 'table table-bordered');
+	var tr = document.createElement('tr');
+	tr.setAttribute('class', 'trHead');
+	var th1 = document.createElement('th');
+	th1.setAttribute('class', 'col-xs-1 col-md-1');
+	var th2 = document.createElement('th');
+	th2.setAttribute('class', 'col-xs-2 col-md-1');
+	var th3 = document.createElement('th');
+	th3.setAttribute('class', 'col-xs-2 col-md-1');
+	var th4 = document.createElement('th');
+	th4.setAttribute('class', 'col-xs-2 col-md-2');
+	var th5 = document.createElement('th');
+	th5.setAttribute('class', 'col-xs-1 col-md-1');
+	var th6 = document.createElement('th');
+	th6.setAttribute('class', 'col-xs-1 col-md-1');
+	var th7 = document.createElement('th');
+	th7.setAttribute('class', 'col-xs-3 col-md-2');
 
-    th1.textContent = 'ID';
-    th2.textContent = 'Name';
-    th3.textContent = 'Last Name';
-    th4.textContent = 'Email';
-    th5.textContent = 'Role';
-    th6.textContent = 'Active';
-    th7.textContent = 'Modificaciones';
+	th1.textContent = 'ID';
+	th2.textContent = 'Name';
+	th3.textContent = 'Last Name';
+	th4.textContent = 'Email';
+	th5.textContent = 'Role';
+	th6.textContent = 'Active';
+	th7.textContent = '';
 
     tr.append(th1);
     tr.append(th2);
@@ -57,51 +62,49 @@ function tabla(jsonObj) {
 
     var users = jsonObj.users;
 
-    for (var i = 0; i < users.length; i++) {
-        var tr1 = document.createElement('tr');
-        var td1 = document.createElement('td');
-        td1.setAttribute('class', 'col-xs-1');
-        var td2 = document.createElement('td');
-        td2.setAttribute('class', 'col-xs-2');
-        var td3 = document.createElement('td');
-        td3.setAttribute('class', 'col-xs-2');
-        var td4 = document.createElement('td');
-        td4.setAttribute('class', 'col-xs-2');
-        var td5 = document.createElement('td');
-        td5.setAttribute('class', 'col-xs-1');
-        var td6 = document.createElement('td');
-        td6.setAttribute('class', 'col-xs-1');
-        var td7 = document.createElement('td');
-        td7.setAttribute('class', 'col-xs-3');
-        var formEdit = document.createElement('form');
-        formEdit.setAttribute('method', 'POST');
-        var inputEdit = document.createElement('input');
-        inputEdit.setAttribute('type', 'hidden');
-        inputEdit.setAttribute('value', users[i].id);
-        inputEdit.setAttribute('id', 'userId');
-        var button1 = document.createElement('button');
-        button1.setAttribute('type', 'button');
-        button1.setAttribute('onclick', 'buttonEdit(' + users[i].id + ')');
-        button1.setAttribute('id', 'edit');
-        button1.setAttribute('class', 'btn btn-default');
-        var button2 = document.createElement('button');
-        button2.setAttribute('type', 'button');
-        button2.setAttribute('onclick', 'buttonDelete(' + users[i].id + ')');
-        button2.setAttribute('id', 'delete');
-        button2.setAttribute('class', 'btn btn-danger');
+	for (var i = 0; i < users.length; i++) {
+		var tr1 = document.createElement('tr');
+		var td1 = document.createElement('td');
+		td1.setAttribute('class', 'col-xs-1');
+		var td2 = document.createElement('td');
+		td2.setAttribute('class', 'col-xs-2');
+		var td3 = document.createElement('td');
+		td3.setAttribute('class', 'col-xs-2');
+		var td4 = document.createElement('td');
+		td4.setAttribute('class', 'col-xs-2');
+		var td5 = document.createElement('td');
+		td5.setAttribute('class', 'col-xs-1');
+		var td6 = document.createElement('td');
+		td6.setAttribute('class', 'col-xs-1');
+		var td7 = document.createElement('td');
+		td7.setAttribute('class', 'col-xs-3 modificaciones');
+		var button1 = document.createElement('button');
+		button1.setAttribute('type', 'button');
+		button1.setAttribute('onclick', 'buttonEdit('+users[i].id+')');
+		button1.setAttribute('value', 'Edit');
+		button1.setAttribute('class', 'btn btn-dark btn-lg');
+		var span1 = document.createElement('span');
+		span1.setAttribute('class', 'glyphicon glyphicon-edit');
+		span1.setAttribute('aria-hidden', 'true');
+		var button2 = document.createElement('button');
+		button2.setAttribute('type', 'button');
+		button2.setAttribute('onclick', 'buttonDelete('+users[i].id+')');
+		button2.setAttribute('value', 'Delete');
+		button2.setAttribute('class', 'btn btn-danger btn-lg');
+		var span2 = document.createElement('span');
+		span2.setAttribute('class', 'glyphicon glyphicon-remove');
+		span2.setAttribute('aria-hidden', 'true');
 
-        td1.textContent = users[i].id;
-        td2.textContent = users[i].name;
-        td3.textContent = users[i].lastName;
-        td4.textContent = users[i].email;
-        td5.textContent = users[i].role.role;
-        td6.textContent = users[i].active;
-        button1.textContent = 'Edit';
-        button2.textContent = 'Delete';
-        formEdit.append(inputEdit);
-        formEdit.append(button1);
-        td7.append(formEdit);
-        td7.append(button2);
+		td1.textContent = users[i].id;
+		td2.textContent = users[i].name;
+		td3.textContent = users[i].lastName;
+		td4.textContent = users[i].email;
+		td5.textContent = users[i].role.role;
+		td6.textContent = users[i].active;
+		button1.append(span1);
+		button2.append(span2);
+		td7.append(button1);
+		td7.append(button2);
 
 
         tr1.append(td1);
@@ -118,7 +121,9 @@ function tabla(jsonObj) {
 
     div.append(table);
 
-    main.append(div);
+	main.append(div1);
+	main.append(div);
+	main.append(div2);
 
 }
 
@@ -153,8 +158,8 @@ function registration() {
 }
 
 function buttonEdit(id) {
-    sessionStorage.setItem("userId", id);
-    window.location.replace('http://localhost:8083/web/admin/update.html');
+	sessionStorage.setItem("userId", id);
+	window.location.replace('http://localhost:8083/web/admin/userUpdate.html');
 }
 
 function buttonDelete(id) {
