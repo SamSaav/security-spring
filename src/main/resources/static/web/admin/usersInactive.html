@@ -20,7 +20,7 @@
 	    		</div>
 	    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	    			<ul class="nav navbar-nav">
-	    				<li class="active"><a href="http://localhost:8083/web/admin/index.html">Home<span class="sr-only">(current)</span></a></li>
+	    				<li><a href="http://localhost:8083/web/admin/index.html">Home<span class="caret sr-only"></span></a></li>
 	    				<li class="dropdown">
 	    					<a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-extended="false">Employee<span class="caret sr-only"></span></a>
 	    					<ul class="dropdown-menu">
@@ -28,10 +28,11 @@
 	    						<li><a href="#">New</a></li>
 	    					</ul>
 	    				</li>
-	    				<li class="dropdown">
-	    					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users<span class="caret sr-only"></span></a>
+	    				<li class="dropdown active">
+	    					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users<span class="sr-only">(current)</span></a>
 	    					<ul class="dropdown-menu">
-	    						<li><a href="users.html">See All</a></li>
+	    						<li><a href="usersActive.html">See Actives</a></li>
+	    						<li><a href="usersInactive.html">See Inactives</a></li>
 	    						<li><a href="registration.html">Registration</a></li>
 	    					</ul>
 	    				</li>
@@ -61,8 +62,28 @@
             	</div>
         	</div>
     	</header>
-    	<main id="myMain">
-    		
+    	<main id="myInactivesMain">
+    		<div class="col-xs-1 col-md-1"></div>
+	    	<div class="row col-xs-10 col-md-10">
+	    		<div class="table-responsive">
+	    			<table class="table">
+	    				<thead>
+	    					<tr>
+	    						<th class="col-xs-2 col-md-2">Name</th>
+	    						<th class="col-xs-2 col-md-2">Last Name</th>
+	    						<th class="col-xs-2 col-md-2">Email</th>
+	    						<th class="col-xs-2 col-md-2">Role</th>
+	    						<th class="col-xs-2 col-md-1">Active</th>
+	    						<th class="col-xs-2 col-md-3"></th>
+	    					</tr>
+	    				</thead>
+	    				<tbody id="inactivesBody">
+	    					
+	    				</tbody>
+	    			</table>
+	    		</div>
+	    	</div>
+    		<div class="col-xs-1 col-md-1"></div>
     	</main>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -71,5 +92,6 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="../js/script.js"></script>
         <script src="js/script.js"></script>
+        <script src="js/functions.js"></script>
     </body>
 </html>

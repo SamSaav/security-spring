@@ -38,31 +38,32 @@ function tablaUsers(jsonObj) {
     var users = jsonObj.users;
 
 	for (var i = 0; i < 5; i++) {
-		var tr1 = document.createElement('tr');
-		var td2 = document.createElement('td');
-		td2.setAttribute('class', 'col-xs-2');
-		var td3 = document.createElement('td');
-		td3.setAttribute('class', 'col-xs-2');
-		var td4 = document.createElement('td');
-		td4.setAttribute('class', 'col-xs-2');
+		if (users[i].active) {
+			var tr1 = document.createElement('tr');
+			var td2 = document.createElement('td');
+			td2.setAttribute('class', 'col-xs-2');
+			var td3 = document.createElement('td');
+			td3.setAttribute('class', 'col-xs-2');
+			var td4 = document.createElement('td');
+			td4.setAttribute('class', 'col-xs-2');
 
-		td2.textContent = users[i].name;
-		td3.textContent = users[i].lastName;
-		td4.textContent = users[i].email;
+			td2.textContent = users[i].name;
+			td3.textContent = users[i].lastName;
+			td4.textContent = users[i].email;
 
-        tr1.append(td2);
-        tr1.append(td3);
-        tr1.append(td4);
+	        tr1.append(td2);
+	        tr1.append(td3);
+	        tr1.append(td4);
 
-        bodyUsers.append(tr1);
-
+	        bodyUsers.append(tr1);
+		}
     }
 
     var tr2 = document.createElement('tr');
     var button = document.createElement('button');
     button.setAttribute('type', 'button');
     button.setAttribute('class', 'btn btn-dark');
-    button.setAttribute('onclick', 'movePage(users)');
+    button.setAttribute('onclick', 'movePage("usersActive")');
 
     button.textContent = 'See more';
 
@@ -80,35 +81,36 @@ function tablaEmployee(jsonObj) {
     var users = jsonObj.employee;
 
 	for (var i = 0; i < 5; i++) {
-		var tr1 = document.createElement('tr');
-		var td2 = document.createElement('td');
-		td2.setAttribute('class', 'col-xs-2');
-		var td3 = document.createElement('td');
-		td3.setAttribute('class', 'col-xs-2');
-		var td4 = document.createElement('td');
-		td4.setAttribute('class', 'col-xs-2');
-		var td5 = document.createElement('td');
-		td5.setAttribute('class', 'col-xs-2');
+		if (users[i].active) {
+			var tr1 = document.createElement('tr');
+			var td2 = document.createElement('td');
+			td2.setAttribute('class', 'col-xs-2');
+			var td3 = document.createElement('td');
+			td3.setAttribute('class', 'col-xs-2');
+			var td4 = document.createElement('td');
+			td4.setAttribute('class', 'col-xs-2');
+			var td5 = document.createElement('td');
+			td5.setAttribute('class', 'col-xs-2');
 
-		td2.textContent = users[i].name;
-		td3.textContent = users[i].lastName;
-		td4.textContent = users[i].project;
-		td5.textContent = users[i].client;
+			td2.textContent = users[i].name;
+			td3.textContent = users[i].lastName;
+			td4.textContent = users[i].project;
+			td5.textContent = users[i].client;
 
-        tr1.append(td2);
-        tr1.append(td3);
-        tr1.append(td4);
-        tr1.append(td5);
+	        tr1.append(td2);
+	        tr1.append(td3);
+	        tr1.append(td4);
+	        tr1.append(td5);
 
-        bodyEmployee.append(tr1);
-
+	        bodyEmployee.append(tr1);
+		}
     }
 
     var tr2 = document.createElement('tr');
     var button = document.createElement('button');
     button.setAttribute('type', 'button');
     button.setAttribute('class', 'btn btn-dark');
-    button.setAttribute('onclick', 'movePage(users)');
+    button.setAttribute('onclick', 'movePage("employeesActive")');
 
     button.textContent = 'See more';
 
@@ -116,8 +118,4 @@ function tablaEmployee(jsonObj) {
 
     bodyEmployee.append(tr2);
 
-}
-
-function movePage (page) {
-	window.location.replace('http://localhost:8083/web/admin/'+page+'.html');
 }
