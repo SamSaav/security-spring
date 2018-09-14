@@ -37,11 +37,25 @@
 	        </div>
 	    </header>
 
-<main class="row">
-	<div class="table-responsive">
-		table>(thead>tr>th*)+tbody
+<main>
+	<div class="table-responsive" id="myEmployeesTable">
+		<table class="table table-bordered row">
+			<thead>
+				<tr>
+					<th class="col-xs-1 col-md-1">Name</th>
+					<th class="col-xs-1 col-md-1">Last Name</th>
+					<th class="col-xs-2 col-md-2">Enterprise ID</th>
+					<th class="col-xs-1 col-md-1">Phone Number</th>
+					<th class="col-xs-2 col-md-2">Resource Role</th>
+					<th class="col-xs-2 col-md-2">English Level</th>
+					<th class="col-xs-2 col-md-2">Office Location</th>
+				</tr>
+			</thead>
+			<tbody id="myEmployees">
+				
+			</tbody>
+		</table>
 	</div>
-
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

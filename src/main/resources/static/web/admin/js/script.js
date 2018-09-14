@@ -62,24 +62,24 @@ function createTheTableUsers(jsonObj) {
 	button2.setAttribute('type', 'button');
 	button2.setAttribute('onclick', 'buttonDelete('+user.id+')');
 	button2.setAttribute('value', 'Delete');
+	var span2 = document.createElement('span');
+	var button3 = document.createElement('button');
+	button3.setAttribute('type', 'button');
+	button3.setAttribute('onclick', 'buttonAbsolutDelete('+user.id+')');
+	button3.setAttribute('value', 'Delete');
+	var span3 = document.createElement('span');
+	span3.setAttribute('class', 'glyphicon glyphicon-trash');
+	span3.setAttribute('aria-hidden', 'true');
 	if (activesBody !== null) {
 		button2.setAttribute('class', 'btn btn-danger btn-lg');
-		var span2 = document.createElement('span');
 		span2.setAttribute('class', 'glyphicon glyphicon-remove');
 		span2.setAttribute('aria-hidden', 'true');
+		button3.setAttribute('class', 'btn btn-default btn-lg');
 	} else if (inactivesBody !== null) {
 		button2.setAttribute('class', 'btn btn-success btn-lg');
-		var span2 = document.createElement('span');
 		span2.setAttribute('class', 'glyphicon glyphicon-ok');
 		span2.setAttribute('aria-hidden', 'true');
-		var button3 = document.createElement('button');
-		button3.setAttribute('type', 'button');
-		button3.setAttribute('onclick', 'buttonAbsolutDelete('+user.id+')');
-		button3.setAttribute('value', 'Delete');
 		button3.setAttribute('class', 'btn btn-danger btn-lg');
-		var span3 = document.createElement('span');
-		span3.setAttribute('class', 'glyphicon glyphicon-trash');
-		span3.setAttribute('aria-hidden', 'true');
 	}
 
 	td2.textContent = user.name;
@@ -89,12 +89,10 @@ function createTheTableUsers(jsonObj) {
 	td6.textContent = user.active;
 	button1.append(span1);
 	button2.append(span2);
+	button3.append(span3);
 	td7.append(button1);
 	td7.append(button2);
-	if (inactivesBody !== null) {
-		button3.append(span3);
-		td7.append(button3);
-	}
+	td7.append(button3);
 
 	tr1.append(td2);
 	tr1.append(td3);

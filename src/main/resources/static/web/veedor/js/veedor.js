@@ -1,4 +1,4 @@
-var url = 'http://localhost:8083/api/employees';
+var url = 'http://localhost:8083/api/employeesActive';
 var http = new XMLHttpRequest();
 
 http.open("GET", url, true);
@@ -7,68 +7,53 @@ http.send();
 http.onload = function () {
     if (http.readyState === 4 && http.status === 200) {
         'use strict';
-        var users = http.response;
-        tabla(users);
+        var employees = http.response;
+        tabla(employees);
     }
 };
 
 function tabla(jsonObj) {
     'use strict';
 
-    var main = document.getElementById('myMain');
+    var employees = jsonObj.employee;
 
-    var div1 = document.createElement('div');
-    div1.setAttribute('class', 'col-xs-2');
-    var div2 = document.createElement('div');
-    div2.setAttribute('class', 'col-xs-2');
-    var div = document.createElement('div');
-    div.setAttribute('class', 'col-xs-8');
-    var table = document.createElement('table');
-    var tr = document.createElement('tr');
-    var th2 = document.createElement('th');
-    th2.setAttribute('class', 'col-xs-2');
-    var th3 = document.createElement('th');
-    th3.setAttribute('class', 'col-xs-3');
-    var th4 = document.createElement('th');
-    th4.setAttribute('class', 'col-xs-4');
+    var myEmployees = document.getElementById('myEmployees');
 
-    th2.textContent = 'Name';
-    th3.textContent = 'Last Name';
-    th4.textContent = 'Email';
-
-    tr.append(th2);
-    tr.append(th3);
-    tr.append(th4);
-
-    table.append(tr);
-
-    var users = jsonObj.users;
-
-    for (var i = 0; i < users.length; i++) {
-        var tr1 = document.createElement('tr');
+    for (var i = 0; i < employees.length; i++) {
+        var tr = document.createElement('tr');
         var td2 = document.createElement('td');
-        td2.setAttribute('class', 'col-xs-3');
+        td2.setAttribute('class', 'col-xs-1 col-md-1');
         var td3 = document.createElement('td');
-        td3.setAttribute('class', 'col-xs-3');
+        td3.setAttribute('class', 'col-xs-1 col-md-1');
         var td4 = document.createElement('td');
-        td4.setAttribute('class', 'col-xs-3');
+        td4.setAttribute('class', 'col-xs-2 col-md-2');
+        var td5 = document.createElement('td');
+        td5.setAttribute('class', 'col-xs-2 col-md-2');
+        var td6 = document.createElement('td');
+        td6.setAttribute('class', 'col-xs-2 col-md-2');
+        var td7 = document.createElement('td');
+        td7.setAttribute('class', 'col-xs-2 col-md-2');
+        var td8 = document.createElement('td');
+        td8.setAttribute('class', 'col-xs-2 col-md-2');
 
-        td2.textContent = users[i].name;
-        td3.textContent = users[i].lastName;
-        td4.textContent = users[i].email;
+        td2.textContent = employees[i].name;
+        td3.textContent = employees[i].lastName;
+        td4.textContent = employees[i].enterpriseID;
+        td5.textContent = employees[i].phoneNumber;
+        td6.textContent = employees[i].resourceRole;
+        td7.textContent = employees[i].englishLevel;
+        td8.textContent = employees[i].officeLocation;
 
-        tr1.append(td2);
-        tr1.append(td3);
-        tr1.append(td4);
+        tr.append(td2);
+        tr.append(td3);
+        tr.append(td4);
+        tr.append(td5);
+        tr.append(td6);
+        tr.append(td7);
+        tr.append(td8);
 
-        table.append(tr1);
+        myEmployees.append(tr);
 
     }
-
-    div.append(table);
-
-    main.append(div1);
-    main.append(div);
-    main.append(div2);
 
 }

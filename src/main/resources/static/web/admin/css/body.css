@@ -38,7 +38,7 @@ th {
 	margin-top: 0;
 }
 
-.btn-dark, .btn-success {
+.btn-dark, .btn-success, .btn-danger {
 	margin-right: 2%;
 }
 
@@ -48,4 +48,9 @@ main {
 
 td {
 	margin-top: 2%;
+}
+
+.btn-default {
+	color: white;
+	background-color: black;
 }
