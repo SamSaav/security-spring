@@ -37,7 +37,15 @@ function tablaUsers(jsonObj) {
 
     var users = jsonObj.users;
 
-	for (var i = 0; i < 5; i++) {
+    var num;
+
+    if (users.length < 5) {
+    	num = users.length;
+    }else{
+    	num = 5;
+    }
+
+	for (var i = 0; i < num; i++) {
 		if (users[i].active) {
 			var tr1 = document.createElement('tr');
 			var td2 = document.createElement('td');
@@ -59,7 +67,7 @@ function tablaUsers(jsonObj) {
 		}
     }
 
-    var tr2 = document.createElement('tr');
+    var section = document.getElementById('myUsers');
     var button = document.createElement('button');
     button.setAttribute('type', 'button');
     button.setAttribute('class', 'btn btn-dark');
@@ -67,9 +75,7 @@ function tablaUsers(jsonObj) {
 
     button.textContent = 'See more';
 
-    tr2.append(button);
-
-    bodyUsers.append(tr2);
+    section.append(button);
 
 }
 
@@ -80,7 +86,15 @@ function tablaEmployee(jsonObj) {
 
     var users = jsonObj.employee;
 
-	for (var i = 0; i < 5; i++) {
+    var num;
+
+    if (users.length < 5) {
+    	num = users.length;
+    } else {
+    	num = 5;
+    }
+
+	for (var i = 0; i < num; i++) {
 		if (users[i].active) {
 			var tr1 = document.createElement('tr');
 			var td2 = document.createElement('td');
@@ -106,7 +120,7 @@ function tablaEmployee(jsonObj) {
 		}
     }
 
-    var tr2 = document.createElement('tr');
+    var section = document.getElementById('myEmployees');
     var button = document.createElement('button');
     button.setAttribute('type', 'button');
     button.setAttribute('class', 'btn btn-dark');
@@ -114,8 +128,6 @@ function tablaEmployee(jsonObj) {
 
     button.textContent = 'See more';
 
-    tr2.append(button);
-
-    bodyEmployee.append(tr2);
+    section.append(button);
 
 }
