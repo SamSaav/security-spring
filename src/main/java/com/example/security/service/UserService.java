@@ -1,6 +1,7 @@
 package com.example.security.service;
 
 import com.example.security.model.Role;
+import com.example.security.model.UrlMicroservicios;
 import com.example.security.model.User;
 import com.example.security.repositories.RoleRepository;
 import com.example.security.repositories.UserRepository;
@@ -166,11 +167,17 @@ public class UserService {
         if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
         } else {
-            String url = "http://ms-empleado/active"; //HACER VARIABLES ESTATICAS (CONFIG APARTE DEL MICROSERVICIO) HABLARLO CON RICARDO
-            return new ResponseEntity<>(maps("employee", restTemplate.getForObject(url, Object.class)), HttpStatus.OK);
+            return new ResponseEntity<>(maps("employee", restTemplate.getForObject(UrlMicroservicios.MS_EMPLEADOS_ACTIVE.toString(), Object.class)), HttpStatus.OK);
         }
     }
 
+    public ResponseEntity<?> getAllEmployeeInactive() {
+        if (isAuth() == null) {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        } else {
+            return new ResponseEntity<>(maps("employee", restTemplate.getForObject(UrlMicroservicios.MS_EMPLEADOS_HIDEN.toString(), Object.class)), HttpStatus.OK);
+        }
+    }
     public User getDataUpdateUser(User user, User usuario) {
         if (usuario.getName() != null && user.getName() != usuario.getName()) {
             user.setName(usuario.getName());

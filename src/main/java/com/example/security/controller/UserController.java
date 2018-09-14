@@ -57,9 +57,16 @@ public class UserController {
         return userService.permanentDeleteUser(id);
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/employeesActive")
     public ResponseEntity<?> getAllEmployeesActive() {
         return userService.getAllEmployeeActive();
     }
+
+    @GetMapping("/employeesInactive")
+    public ResponseEntity<?> getAllEmployeesInactive() {
+        return userService.getAllEmployeeInactive();
+    }
+
+
 
 }
