@@ -17,9 +17,17 @@ function tabla(jsonObj) {
 
     var employees = jsonObj.employee;
 
-    var myEmployees = document.getElementById('myEmployees');
+    var bodyEmployee = document.getElementById('bodyEmployee');
 
-    for (var i = 0; i < employees.length; i++) {
+    var num;
+
+    if (5 > employees.length) {
+        num = employees.length;
+    } else {
+        num = 5;
+    }
+
+    for (var i = 0; i < num; i++) {
         var tr = document.createElement('tr');
         var td2 = document.createElement('td');
         td2.setAttribute('class', 'col-xs-1 col-md-1');
@@ -52,7 +60,7 @@ function tabla(jsonObj) {
         tr.append(td7);
         tr.append(td8);
 
-        myEmployees.append(tr);
+        bodyEmployee.append(tr);
 
     }
 

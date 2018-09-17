@@ -76,7 +76,7 @@ function buttonDelete(id) {
     http.open("DELETE", url, true);
     http.onload = function () {
         if (http.readyState === 4 && http.status === 200) {
-            window.location.replace('http://localhost:8083/web/admin/usersActive.html');
+            window.location.replace('http://localhost:8083/web/admin/userInactive.html');
         } else {
             alert('Fail');
             window.location.replace('http://localhost:8083/web/admin/usersActive.html');
@@ -127,6 +127,9 @@ function update() {
         email = null;
     }
     if (password === "") {
+        password = null;
+    }
+    if (confPassword === "") {
         password = null;
     }
     if (role === "--") {

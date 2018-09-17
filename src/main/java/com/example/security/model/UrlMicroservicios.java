@@ -24,12 +24,12 @@ public enum UrlMicroservicios {
         },
         MS_EMPLEADOS_DELETE {
             public String toString() {
-                return "http://ms-empleado/delete/";
+                return "http://ms-empleado/delete";
             }
         },
         MS_EMPLEADOS_PERMANENT_DELETE {
             public String toString() {
-                return "http://ms-empleado/permanentDelete/";
+                return "http://ms-empleado/permanentDelete";
             }
         }
 }
