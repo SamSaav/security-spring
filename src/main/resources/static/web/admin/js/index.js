@@ -86,8 +86,16 @@ function tablaEmployee(jsonObj) {
 
     var employee = jsonObj.employee;
 
-	for (var i = 0; i < 5; i++) {
-		if (users[i].active) {
+    var num;
+
+    if (employee.length < 5) {
+    	num = employee.length;
+    }else{
+    	num = 5;
+    }
+
+	for (var i = 0; i < num; i++) {
+		if (employee[i].statusEmpleado) {
 			var tr1 = document.createElement('tr');
 			var td2 = document.createElement('td');
 			td2.setAttribute('class', 'col-xs-2');
