@@ -4,7 +4,7 @@ public enum UrlMicroservicios {
 
         MS_EMPLEADOS {
             public String toString() {
-              return "http://ms-empleado/";
+              return "http://ms-empleado/employees";
             }
         },
         MS_EMPLEADOS_ACTIVE {

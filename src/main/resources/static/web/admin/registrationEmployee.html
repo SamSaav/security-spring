@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/body.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">ADMIN</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="http://localhost:8083/web/admin/index.html">Home<span class="caret sr-only"></span></a></li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employee<span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="employeeActive.html">See Actives</a></li>
+                            <li><a href="employeeInactive.html">See Inactives</a></li>
+                            <li><a href="registrationEmployee.html">Registration</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-extended="false">Users<span class="caret sr-only"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="usersActive.html">See Actives</a></li>
+                            <li><a href="usersInactive.html">See Inactives</a></li>
+                            <li><a href="registration.html">Registration</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clients<span class="caret sr-only"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">See All</a></li>
+                            <li><a href="#">New</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects<span class="caret sr-only"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">See All</a></li>
+                            <li><a href="#">New</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" onclick="logout()">Log Out</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Employee Registration Interface</h1>
+            </div>
+        </div>
+</header>
+<main class="row">
+    <div class="col-xs-1 col-sm-3"></div>
+    <form class="col-xs-10 col-sm-6" method="POST" id="registration-form" onsubmit="return false">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="First Name">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+        </div>
+        <div class="form-group">
+            <label for="enterpriseId">Enterprise Id</label>
+            <input type="email" class="form-control" id="enterpriseId"
+                   placeholder="Enterprise Id ">
+        </div>
+        <div class="form-group">
+            <label for="phone">Resource Number</label>
+            <input type="tel" class="form-control" id="resourceNumber" placeholder="Resource Number" pattern="[0-9]{8}"
+           required />
+           <span class="validity"></span>
+        </div>
+        <div>
+            <label for="Gender">Gender</label>
+            <select class="form-control" name="Gender" id="Gender">
+                <option>--</option>
+                <option name="Gender" value="1">Male</option>
+                <option name="Gender" value="2">Female</option>
+            </select>
+        </div>
+        <div>
+            <label for="ResourceRole">Resource Role</label>
+            <select class="form-control" name="ResourceRole" id="ResourceRole">
+                <option>--</option>
+                <option name="ResourceRole" value="1">Application Development Associate</option>
+                <option name="ResourceRole" value="2">Application Development Analyst</option>
+                <option name="ResourceRole" value="2">Application Development Senior Analyst</option>
+            </select>
+        </div>
+        <div>
+            <label for="EnglishLevel">English Level</label>
+            <select class="form-control" name="EnglishLevel" id="EnglishLevel">
+                <option>--</option>
+                <option name="EnglishLevel" value="1">No completo el test</option>
+                <option name="EnglishLevel" value="1">Level 1-Beginner</option>
+                <option name="EnglishLevel" value="2">Level 2-Beginner</option>
+                <option name="EnglishLevel" value="2">Level 3-Beginner</option>
+                <option name="EnglishLevel" value="1">Level 4-Elementary</option>
+                <option name="EnglishLevel" value="2">Level 5-Elementary</option>
+                <option name="EnglishLevel" value="2">Level 6-Elementary</option>
+                <option name="EnglishLevel" value="1">Level 7-Intermediate</option>
+                <option name="EnglishLevel" value="2">Level 8-Intermediate</option>
+                <option name="EnglishLevel" value="2">Level 9-Intermediate</option>
+                <option name="EnglishLevel" value="1">Level 10-Upper Intermediate</option>
+                <option name="EnglishLevel" value="2">Level 11-Upper Intermediate</option>
+                <option name="EnglishLevel" value="2">Level 12-Upper Intermediate</option>
+                <option name="EnglishLevel" value="2">Level 13-Advanced</option>
+                <option name="EnglishLevel" value="2">Level 14-Advanced</option>
+                <option name="EnglishLevel" value="2">Level 15-Advanced</option>
+                <option name="EnglishLevel" value="2">Level 16-Advanced</option>
+            </select>
+        </div>
+        <div>
+            <label for="OfficeLocation">Office Location</label>
+            <select class="form-control" name="OfficeLocation" id="OfficeLocation">
+                <option>--</option>
+                <option name="OfficeLocation" value="1">Buenos Aires Roque Saenz Peña</option>
+                <option name="OfficeLocation" value="2">Rosario Santa Fe</option>
+                <option name="OfficeLocation" value="2">Buenos Aires - La Plata</option>
+                <option name="OfficeLocation" value="2">Buenos Aires Migueletes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="client">Client</label>
+            <input type="number" class="form-control" id="client"
+                   placeholder="Client">
+        </div>        
+        <div class="form-group">
+            <label for="project">Project</label>
+            <input type="number" class="form-control" id="project"
+                   placeholder="Project">
+        </div>
+        <br>
+        <button type="submit" class="submit-button" onclick="registration()">Submit</button>
+    </form>
+    <div class="col-xs-1 col-sm-3"></div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="../js/script.js"></script>
+<script src="js/functions.js"></script>
+</body>
+<!-- Footer -->
+<br>
+<br>
+</html>

@@ -163,6 +163,16 @@ public class UserService {
 
     }
 
+
+    public ResponseEntity<?> getAllEmployees() {
+        if (isAuth() == null) {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        } else {
+            return new ResponseEntity<>(maps("employee", restTemplate.getForObject(UrlMicroservicios.MS_EMPLEADOS.toString(), Object.class)), HttpStatus.OK);
+        }
+    }
+
+
     public ResponseEntity<?> getAllEmployeeActive() {
         if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);

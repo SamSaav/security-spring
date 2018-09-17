@@ -37,7 +37,7 @@ function tablaUsers(jsonObj) {
 
     var users = jsonObj.users;
 
-	for (var i = 0; i < 5; i++) {
+	for (var i = 0; i < 1; i++) {
 		if (users[i].active) {
 			var tr1 = document.createElement('tr');
 			var td2 = document.createElement('td');
@@ -78,10 +78,10 @@ function tablaEmployee(jsonObj) {
 
     var bodyEmployee = document.getElementById('bodyEmployee');
 
-    var users = jsonObj.employee;
+    var employee = jsonObj.employee;
 
-	for (var i = 0; i < 5; i++) {
-		if (users[i].active) {
+	for (var i = 0; i < 2; i++) {
+		if (employee[i].statusEmpleado) {
 			var tr1 = document.createElement('tr');
 			var td2 = document.createElement('td');
 			td2.setAttribute('class', 'col-xs-2');
@@ -92,10 +92,10 @@ function tablaEmployee(jsonObj) {
 			var td5 = document.createElement('td');
 			td5.setAttribute('class', 'col-xs-2');
 
-			td2.textContent = users[i].name;
-			td3.textContent = users[i].lastName;
-			td4.textContent = users[i].project;
-			td5.textContent = users[i].client;
+			td2.textContent = employee[i].name;
+			td3.textContent = employee[i].lastName;
+			td4.textContent = employee[i].project;
+			td5.textContent = employee[i].client;
 
 	        tr1.append(td2);
 	        tr1.append(td3);
