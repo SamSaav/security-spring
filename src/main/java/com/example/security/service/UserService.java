@@ -6,6 +6,8 @@ import com.example.security.model.User;
 import com.example.security.repositories.RoleRepository;
 import com.example.security.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -178,6 +180,53 @@ public class UserService {
             return new ResponseEntity<>(maps("employee", restTemplate.getForObject(UrlMicroservicios.MS_EMPLEADOS_HIDEN.toString(), Object.class)), HttpStatus.OK);
         }
     }
+
+    public ResponseEntity<?> createEmployee(Object employee) {
+        if (isAuth() == null) {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1) {
+            return new ResponseEntity<>(restTemplate.postForObject(UrlMicroservicios.MS_EMPLEADOS.toString(), employee, Object.class), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    public ResponseEntity<?> updateEmployee (Long id, Object employee) {
+        if (isAuth() == null) {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1) {
+            String url = UrlMicroservicios.MS_EMPLEADOS_UPDATE.toString() + "/" + id;
+            HttpEntity<Object> requestUpdate = new HttpEntity<>(employee);
+            return new ResponseEntity<>(restTemplate.exchange(url, HttpMethod.PUT, requestUpdate, Void.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    public ResponseEntity<?> hideEmployee(Long id) {
+        if (isAuth() == null) {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1) {
+            String url = UrlMicroservicios.MS_EMPLEADOS_DELETE.toString() + "/" + id;
+            HttpEntity<?> requestDelete = new HttpEntity<>(id);
+            return new ResponseEntity<>(restTemplate.exchange(url, HttpMethod.DELETE, requestDelete, Void.class), HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    public ResponseEntity<?> deleteEmployee(Long id) {
+        if (isAuth() == null) {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1) {
+            String url = UrlMicroservicios.MS_EMPLEADOS_PERMANENT_DELETE.toString() + "/" + id;
+            HttpEntity<?> requestDelete = new HttpEntity<>(id);
+            return new ResponseEntity<>(restTemplate.exchange(url, HttpMethod.DELETE, requestDelete, Void.class), HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+    }
+
     public User getDataUpdateUser(User user, User usuario) {
         if (usuario.getName() != null && user.getName() != usuario.getName()) {
             user.setName(usuario.getName());

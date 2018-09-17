@@ -15,7 +15,7 @@ http.onload = function () {
 
 function getEmployee () {
 	'use strict';
-	var empUrl = 'http://localhost:8083/api/employees';
+	var empUrl = 'http://localhost:8083/api/employeesActive';
 	var xhr = new XMLHttpRequest();
 
 	xhr.open("GET", empUrl, true);

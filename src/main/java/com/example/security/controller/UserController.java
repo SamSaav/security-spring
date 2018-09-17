@@ -3,6 +3,7 @@ package com.example.security.controller;
 import com.example.security.model.User;
 import com.example.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,19 +15,16 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    @ResponseBody
     public ResponseEntity<?> getUsers() {
         return userService.allTheInformation(userService.getUsersDTO(userService.getUsers()));
     }
 
     @GetMapping("/user/{id}")
-    @ResponseBody
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         return userService.getUserDTO(userService.getUser(id));
     }
 
     @GetMapping("/userEmail")
-    @ResponseBody
     public ResponseEntity<?> getUserByEmail(@RequestParam String email) {
         return userService.getUserByEmail(email);
     }
@@ -67,6 +65,24 @@ public class UserController {
         return userService.getAllEmployeeInactive();
     }
 
+    @PostMapping("/createEmployee")
+    public ResponseEntity<?> createEmployee(@RequestBody Object employee) {
+        return userService.createEmployee(employee);
+    }
 
+    @PutMapping("/updateEmployee/{id}")
+    public ResponseEntity<?> updateEmployee(@PathVariable("id") Long id, @RequestBody Object employee) {
+        return userService.updateEmployee(id, employee);
+    }
+
+    @DeleteMapping("/deleteEmployee/{id}")
+    public ResponseEntity<?> deleteUpdate(@PathVariable("id") Long id) {
+        return userService.hideEmployee(id);
+    }
+
+    @DeleteMapping("/permanentDelete/{id}")
+    public ResponseEntity<?> permanentDelete(@PathVariable("id") Long id) {
+        return userService.deleteEmployee(id);
+    }
 
 }

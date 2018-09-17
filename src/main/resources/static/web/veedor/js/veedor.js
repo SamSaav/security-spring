@@ -28,11 +28,11 @@ function tabla(jsonObj) {
         var td4 = document.createElement('td');
         td4.setAttribute('class', 'col-xs-2 col-md-2');
         var td5 = document.createElement('td');
-        td5.setAttribute('class', 'col-xs-2 col-md-2');
+        td5.setAttribute('class', 'col-xs-1 col-md-1');
         var td6 = document.createElement('td');
         td6.setAttribute('class', 'col-xs-2 col-md-2');
         var td7 = document.createElement('td');
-        td7.setAttribute('class', 'col-xs-2 col-md-2');
+        td7.setAttribute('class', 'col-xs-1 col-md-1');
         var td8 = document.createElement('td');
         td8.setAttribute('class', 'col-xs-2 col-md-2');
 
