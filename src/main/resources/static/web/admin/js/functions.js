@@ -31,7 +31,7 @@ function registration() {
 function registrationEmployee() {
     var name = document.getElementById("firstName").value;
     var lastName = document.getElementById("lastName").value;
-    var enterpriseId = document.getElementById("enterpriseId").value;
+    var enterpriseID = document.getElementById("enterpriseId").value;
     var resourceNumber = document.getElementById("resourceNumber").value;
     var gender = document.getElementById("Gender").value;
     var resourceRole = document.getElementById("ResourceRole").value;
@@ -40,27 +40,57 @@ function registrationEmployee() {
     var client = document.getElementById("client").value;
     var project = document.getElementById("project").value;
 
+    if (name === "") {
+        name = null;
+    }
+    if (lastName === "") {
+        lastName = null;
+    }
+    if (enterpriseID === "") {
+        enterpriseID = null;
+    }
+    if (resourceNumber === "") {
+        resourceNumber = null;
+    }
+    if (gender === "--") {
+        gender = null;
+    }
+    if (resourceRole === "--") {
+        resourceRole = null;
+    }
+    if (englishLevel === "--") {
+        englishLevel = null;
+    }
+    if (officeLocation === "--") {
+        officeLocation = null;
+    }
+    if (client === "") {
+        client = null;
+    }
+    if (project === "") {
+        project = null;
+    }
 
-    if (password === confPassword) {
-        var url = 'http://localhost:8083/api/user?name=' + name + '&lastName=' + lastName + '&email=' + email + '&password=' + password + '&role=' + role;
-        var http = new XMLHttpRequest();
+    var dto = {"name": name, "lastName": lastName, "enterpriseID": enterpriseID, "resourceNumber": resourceNumber,
+     "gender": gender, "resourceRole": resourceRole, "englishLevel": englishLevel, "officeLocation": officeLocation, "client": client
+     , "project": project};
+    var url = "http://localhost:8083/api/createEmployee";
+    var http = new XMLHttpRequest();
 
-        var json = JSON.stringify();
+    var json = JSON.stringify(dto);
 
-        http.open("POST", url, true);
-        http.setRequestHeader('Content-Type', 'application/json');
-        http.onload = function () {
+    http.open("POST", url, true);
+    http.setRequestHeader('Content-Type', 'application/json');
+    http.onload = function () {
             if (http.readyState === 4 && http.status === 201) {
                 window.location.replace('http://localhost:8083/web/admin/index.html');
             } else {
                 alert("The registration fail");
-                window.location.replace('http://localhost:8083/web/admin/registration.html');
+                window.location.replace('http://localhost:8083/web/admin/registrationEmployee.html');
             }
         }
         http.send(json);
-    } else {
-        window.location.replace('http://localhost:8083/web/admin/registration.html');
-    }
+
 }
 
 
@@ -180,3 +210,4 @@ function update() {
         window.location.replace('http://localhost:8083/web/admin/userUpdate.html');
     }
 }
+

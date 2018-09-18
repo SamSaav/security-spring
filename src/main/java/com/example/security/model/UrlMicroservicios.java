@@ -2,6 +2,11 @@ package com.example.security.model;
 
 public enum UrlMicroservicios {
 
+        MS_NEW_EMPLEADOS {
+            public String toString() {
+            return "http://ms-empleado/";
+        }
+        },
         MS_EMPLEADOS {
             public String toString() {
               return "http://ms-empleado/employees";

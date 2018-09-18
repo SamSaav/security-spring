@@ -174,11 +174,12 @@ public class UserService {
         }
     }
 
+
     public ResponseEntity<?> createEmployee(Object employee) {
         if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
         } else if (getRole(isAuth()) == 1) {
-            return new ResponseEntity<>(restTemplate.postForObject(UrlMicroservicios.MS_EMPLEADOS.toString(), employee, Object.class), HttpStatus.CREATED);
+            return new ResponseEntity<>(restTemplate.postForObject(UrlMicroservicios.MS_NEW_EMPLEADOS.toString(), employee, Object.class), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
         }
