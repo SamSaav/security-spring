@@ -59,16 +59,6 @@ public class UserController {
         return userService.getAllEmployees();
     }
 
-    @GetMapping("/employeesActive")
-    public ResponseEntity<?> getAllEmployeesActive() {
-        return userService.getAllEmployeeActive();
-    }
-
-    @GetMapping("/employeesInactive")
-    public ResponseEntity<?> getAllEmployeesInactive() {
-        return userService.getAllEmployeeInactive();
-    }
-
     @PostMapping("/createEmployee")
     public ResponseEntity<?> createEmployee(@RequestBody Object employee) {
         return userService.createEmployee(employee);

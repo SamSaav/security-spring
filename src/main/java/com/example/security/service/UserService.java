@@ -174,23 +174,6 @@ public class UserService {
         }
     }
 
-
-    public ResponseEntity<?> getAllEmployeeActive() {
-        if (isAuth() == null) {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        } else {
-            return new ResponseEntity<>(maps("employee", restTemplate.getForObject(UrlMicroservicios.MS_EMPLEADOS_ACTIVE.toString(), Object.class)), HttpStatus.OK);
-        }
-    }
-
-    public ResponseEntity<?> getAllEmployeeInactive() {
-        if (isAuth() == null) {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        } else {
-            return new ResponseEntity<>(maps("employee", restTemplate.getForObject(UrlMicroservicios.MS_EMPLEADOS_HIDEN.toString(), Object.class)), HttpStatus.OK);
-        }
-    }
-
     public ResponseEntity<?> createEmployee(Object employee) {
         if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
