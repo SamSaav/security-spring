@@ -112,6 +112,24 @@ public class UserService {
         }
     }
 
+    public ResponseEntity<?> deleteUserById(Long id) {
+        if (isAuth() == null) {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1) {
+            if (id != null) {
+                User user = userRepository.findById(id).get();
+                user.changeActive();
+                userRepository.save(user);
+                return new ResponseEntity<>(maps("Temporarily deleted", true), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(maps("Sin contenido", false), HttpStatus.NO_CONTENT);
+            }
+        } else {
+            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+
+    }
+
     public ResponseEntity<?> deleteUser(Long id) {
         if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);

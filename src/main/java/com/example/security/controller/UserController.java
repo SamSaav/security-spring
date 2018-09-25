@@ -14,12 +14,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/veedor/users")
+    @GetMapping("/users")
     public ResponseEntity<?> getUsers() {
         return userService.allTheInformation(userService.getUsersDTO(userService.getUsers()));
     }
 
-    @GetMapping("/veedor/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         return userService.getUserDTO(userService.getUser(id));
     }
@@ -29,37 +29,42 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
-    @PostMapping("/admin/create")
+    @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestParam String name, @RequestParam String lastName,
                                         @RequestParam String email, @RequestParam String password, @RequestParam Long role) {
         return userService.saveUser(name, lastName, email, password, role);
     }
 
-    @PutMapping("/admin/update/{id}") //cambiar por un put
+    @PutMapping("/user/{id}") //cambiar por un put
     public ResponseEntity<?> updateUser(@RequestBody User usuario, @PathVariable("id") Long id) {
         return userService.updateUser(id, usuario);
     }
 
-    @DeleteMapping("/admin/delete/{id}")
+    /*@GetMapping("/user/{id}/deleteById")
+    public ResponseEntity<?> deleteUserById(@PathVariable("id") Long id) {
+        return userService.deleteUserById(id);
+    }*/
+
+    @DeleteMapping("/user/{id}/delete")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
         return userService.deleteUser(id);
     }
 
-    @DeleteMapping("/admin/permanentDelete/{id}")
+    @DeleteMapping("/user/{id}/permanentDelete")
     public ResponseEntity<?> permanentDeleteUser(@PathVariable("id") Long id) {
         return userService.permanentDeleteUser(id);
     }
-    @GetMapping("/admin/employees")
+    @GetMapping("/employees")
     public ResponseEntity<?> getAllEmployees() {
         return userService.getAllEmployees();
     }
 
-    @PostMapping("/admin/createEmployee")
+    @PostMapping("/createEmployee")
     public ResponseEntity<?> createEmployee(@RequestBody Object employee) {
         return userService.createEmployee(employee);
     }
 
-    @PutMapping("/admin/updateEmployee/{id}")
+    @PutMapping("/updateEmployee/{id}")
     public ResponseEntity<?> updateEmployee(@PathVariable("id") Long id, @RequestBody Object employee) {
         return userService.updateEmployee(id, employee);
     }
@@ -69,7 +74,7 @@ public class UserController {
         return userService.hideEmployee(id);
     }
 
-    @DeleteMapping("/admin/permanentDelete/{id}")
+    @DeleteMapping("/permanentDelete/{id}")
     public ResponseEntity<?> permanentDelete(@PathVariable("id") Long id) {
         return userService.deleteEmployee(id);
     }
