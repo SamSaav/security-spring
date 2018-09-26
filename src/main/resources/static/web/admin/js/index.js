@@ -1,4 +1,4 @@
-var url = 'http://localhost:8083/api/users';
+var url = 'http://localhost:8083/api/veedor/users';
 var http = new XMLHttpRequest();
 
 http.open("GET", url, true);
@@ -15,7 +15,7 @@ http.onload = function () {
 
 function getEmployee () {
 	'use strict';
-	var empUrl = 'http://localhost:8083/api/employeesActive';
+	var empUrl = 'http://localhost:8083/api/veedor/employees';
 	var xhr = new XMLHttpRequest();
 
 	xhr.open("GET", empUrl, true);
@@ -84,18 +84,18 @@ function tablaEmployee(jsonObj) {
 
     var bodyEmployee = document.getElementById('bodyEmployee');
 
-    var users = jsonObj.employee;
+    var employee = jsonObj.employee;
 
     var num;
 
-    if (users.length < 5) {
-    	num = users.length;
-    } else {
+    if (employee.length < 5) {
+    	num = employee.length;
+    }else{
     	num = 5;
     }
 
 	for (var i = 0; i < num; i++) {
-		if (users[i].active) {
+		if (employee[i].statusEmpleado) {
 			var tr1 = document.createElement('tr');
 			var td2 = document.createElement('td');
 			td2.setAttribute('class', 'col-xs-2');
@@ -106,10 +106,10 @@ function tablaEmployee(jsonObj) {
 			var td5 = document.createElement('td');
 			td5.setAttribute('class', 'col-xs-2');
 
-			td2.textContent = users[i].name;
-			td3.textContent = users[i].lastName;
-			td4.textContent = users[i].project;
-			td5.textContent = users[i].client;
+			td2.textContent = employee[i].name;
+			td3.textContent = employee[i].lastName;
+			td4.textContent = employee[i].project;
+			td5.textContent = employee[i].client;
 
 	        tr1.append(td2);
 	        tr1.append(td3);

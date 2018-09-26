@@ -1,4 +1,4 @@
-var url = 'http://localhost:8083/api/employeesActive';
+var url = 'http://localhost:8083/api/veedor/employees';
 var http = new XMLHttpRequest();
 
 http.open("GET", url, true);

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADMIN</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/body.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">ADMIN</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="http://localhost:8083/web/admin/index.html">Home<span class="caret sr-only"></span></a></li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employee<span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="employeesActive.html">See Actives</a></li>
+                            <li><a href="employeesInactive.html">See Inactives</a></li>
+                            <li><a href="registrationEmployee.html">Registration</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-extended="false">Users<span class="caret sr-only"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="usersActive.html">See Actives</a></li>
+                            <li><a href="usersInactive.html">See Inactives</a></li>
+                            <li><a href="registration.html">Registration</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clients<span class="caret sr-only"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">See All</a></li>
+                            <li><a href="#">New</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects<span class="caret sr-only"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">See All</a></li>
+                            <li><a href="#">New</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" onclick="logout()">Log Out</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Employee Update Interface</h1>
+            </div>
+        </div>
+</header>
+<main class="row">
+    <div class="col-xs-1 col-sm-3"></div>
+    <form class="col-xs-10 col-sm-6" method="POST" id="registration-form" onsubmit="return false">
+        <p>* Leave empty any field that you don't want to change</p>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="First Name">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+        </div>
+        <div class="form-group">
+            <label for="enterpriseId">Enterprise Id</label>
+            <input type="email" class="form-control" id="enterpriseId"
+                   placeholder="Enterprise Id ">
+        </div>
+        <div class="form-group">
+            <label for="phone">Resource Number</label>
+            <input type="tel" class="form-control" id="resourceNumber" placeholder="Resource Number" pattern="[0-9]{8}"
+           required />
+        </div>
+        <div>
+            <label for="Gender">Gender</label>
+            <select class="form-control" name="Gender" id="Gender">
+                <option value="">--</option>
+                <option name="Gender" value="Male">Male</option>
+                <option name="Gender" value="Female">Female</option>
+            </select>
+        </div>
+        <div>
+            <label for="ResourceRole">Resource Role</label>
+            <select class="form-control" name="ResourceRole" id="ResourceRole">
+                <option value="">--</option>
+                <option name="ResourceRole" value="Application Development Associate">Application Development Associate</option>
+                <option name="ResourceRole" value="Application Development Analyst">Application Development Analyst</option>
+                <option name="ResourceRole" value="Application Development Senior Analyst">Application Development Senior Analyst</option>
+            </select>
+        </div>
+        <div>
+            <label for="EnglishLevel">English Level</label>
+            <select class="form-control" name="EnglishLevel" id="EnglishLevel">
+                <option value="">--</option>
+                <option name="EnglishLevel" value="No completo el test">No completo el test</option>
+                <option name="EnglishLevel" value="Level 1-Beginner">Level 1-Beginner</option>
+                <option name="EnglishLevel" value="Level 2-Beginner">Level 2-Beginner</option>
+                <option name="EnglishLevel" value="Level 3-Beginner">Level 3-Beginner</option>
+                <option name="EnglishLevel" value="Level 4-Elementary">Level 4-Elementary</option>
+                <option name="EnglishLevel" value="Level 5-Elementary">Level 5-Elementary</option>
+                <option name="EnglishLevel" value="Level 6-Elementary">Level 6-Elementary</option>
+                <option name="EnglishLevel" value="Level 7-Intermediate">Level 7-Intermediate</option>
+                <option name="EnglishLevel" value="Level 8-Intermediate">Level 8-Intermediate</option>
+                <option name="EnglishLevel" value="Level 9-Intermediate">Level 9-Intermediate</option>
+                <option name="EnglishLevel" value="Level 10-Upper Intermediate">Level 10-Upper Intermediate</option>
+                <option name="EnglishLevel" value="Level 11-Upper Intermediate">Level 11-Upper Intermediate</option>
+                <option name="EnglishLevel" value="Level 12-Upper Intermediate">Level 12-Upper Intermediate</option>
+                <option name="EnglishLevel" value="Level 13-Advanced">Level 13-Advanced</option>
+                <option name="EnglishLevel" value="Level 14-Advanced">Level 14-Advanced</option>
+                <option name="EnglishLevel" value="Level 15-Advanced">Level 15-Advanced</option>
+                <option name="EnglishLevel" value="Level 16-Advanced">Level 16-Advanced</option>
+            </select>
+        </div>
+        <div>
+            <label for="OfficeLocation">Office Location</label>
+            <select class="form-control" name="OfficeLocation" id="OfficeLocation">
+                <option value="">--</option>
+                <option name="OfficeLocation" value="Buenos Aires Roque Saenz Peña">Buenos Aires Roque Saenz Peña</option>
+                <option name="OfficeLocation" value="Rosario Santa Fe">Rosario Santa Fe</option>
+                <option name="OfficeLocation" value="Buenos Aires - La Plata">Buenos Aires - La Plata</option>
+                <option name="OfficeLocation" value="Buenos Aires Migueletes">Buenos Aires Migueletes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="client">Client</label>
+            <input type="number" class="form-control" id="client"
+                   placeholder="Client">
+        </div>        
+        <div class="form-group">
+            <label for="project">Project</label>
+            <input type="number" class="form-control" id="project"
+                   placeholder="Project">
+        </div>
+        <br>
+        <button type="submit" class="submit-button" onclick="updateEmployee()">Submit</button>
+    </form>
+    <div class="col-xs-1 col-sm-3"></div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="../js/script.js"></script>
+<script src="js/functions.js"></script>
+<script src="js/updateEmployee.js"></script>
+</body>
+<!-- Footer -->
+<br>
+<br>
+</html>

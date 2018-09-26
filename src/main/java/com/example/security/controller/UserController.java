@@ -14,12 +14,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("/veedor/users")
     public ResponseEntity<?> getUsers() {
         return userService.allTheInformation(userService.getUsersDTO(userService.getUsers()));
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/veedor/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         return userService.getUserDTO(userService.getUser(id));
     }
@@ -29,59 +29,53 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
-    @PostMapping("/user")
-    public ResponseEntity<?> createUser(@RequestParam String name, @RequestParam String lastName,
-                                        @RequestParam String email, @RequestParam String password, @RequestParam Long role) {
-        return userService.saveUser(name, lastName, email, password, role);
+    @PostMapping("/admin/create")
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        return userService.saveUser(user);
     }
 
-    @PutMapping("/user/{id}") //cambiar por un put
+    @PutMapping("/admin/update/{id}")
     public ResponseEntity<?> updateUser(@RequestBody User usuario, @PathVariable("id") Long id) {
         return userService.updateUser(id, usuario);
     }
 
-    /*@GetMapping("/user/{id}/deleteById")
+    @DeleteMapping("/admin/delete/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable("id") Long id) {
         return userService.deleteUserById(id);
-    }*/
-
-    @DeleteMapping("/user/{id}/delete")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
-        return userService.deleteUser(id);
     }
 
-    @DeleteMapping("/user/{id}/permanentDelete")
+    @DeleteMapping("/admin/permanentDelete/{id}")
     public ResponseEntity<?> permanentDeleteUser(@PathVariable("id") Long id) {
         return userService.permanentDeleteUser(id);
     }
 
-    @GetMapping("/employeesActive")
-    public ResponseEntity<?> getAllEmployeesActive() {
-        return userService.getAllEmployeeActive();
+    @GetMapping("/veedor/employees")
+    public ResponseEntity<?> getAllEmployees() {
+        return userService.getAllEmployees();
     }
 
-    @GetMapping("/employeesInactive")
-    public ResponseEntity<?> getAllEmployeesInactive() {
-        return userService.getAllEmployeeInactive();
+    @GetMapping("/veedor/employees/{id}")
+    public ResponseEntity<?> getEmployee(@PathVariable("id") Long id) {
+        return userService.getEmployee(id);
     }
 
-    @PostMapping("/createEmployee")
+    @PostMapping("/admin/createEmployee")
     public ResponseEntity<?> createEmployee(@RequestBody Object employee) {
         return userService.createEmployee(employee);
     }
 
-    @PutMapping("/updateEmployee/{id}")
+    @PutMapping("/admin/updateEmployee/{id}")
     public ResponseEntity<?> updateEmployee(@PathVariable("id") Long id, @RequestBody Object employee) {
         return userService.updateEmployee(id, employee);
     }
 
-    @DeleteMapping("/deleteEmployee/{id}")
+    @DeleteMapping("/admin/deleteEmployee/{id}")
     public ResponseEntity<?> deleteUpdate(@PathVariable("id") Long id) {
         return userService.hideEmployee(id);
     }
 
-    @DeleteMapping("/permanentDelete/{id}")
-    public ResponseEntity<?> permanentDelete(@PathVariable("id") Long id) {
+    @DeleteMapping("/admin/permanentDeleteEmployee/{id}")
+    public ResponseEntity<?> permanentDeleteEmployee(@PathVariable("id") Long id) {
         return userService.deleteEmployee(id);
     }
 

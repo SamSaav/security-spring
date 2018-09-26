@@ -1,6 +1,6 @@
 var activesBody = document.getElementById('activesBody');
 var inactivesBody = document.getElementById('inactivesBody');
-var url = 'http://localhost:8083/api/users';
+var url = 'http://localhost:8083/api/veedor/users';
 var http = new XMLHttpRequest();
 
 http.open("GET", url, true);

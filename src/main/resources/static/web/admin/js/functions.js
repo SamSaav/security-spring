@@ -1,16 +1,87 @@
-function registration() {
-    var name = document.getElementById("firstName").value;
-    var lastName = document.getElementById("lastName").value;
-    var email = document.getElementById("userEmail").value;
-    var password = document.getElementById("userPassword").value;
-    var confPassword = document.getElementById("userConfirmPassword").value;
-    var role = document.getElementById("RoleOptions").value;
+function valuesEmployee(){
 
-    if (password === confPassword) {
-        var url = 'http://localhost:8083/api/user?name=' + name + '&lastName=' + lastName + '&email=' + email + '&password=' + password + '&role=' + role;
+    var employee = {name:document.getElementById("firstName").value,
+        lastName:document.getElementById("lastName").value,
+        enterpriseID:document.getElementById("enterpriseId").value, resourceNumber:document.getElementById("resourceNumber").value,
+        gender:document.getElementById("Gender").value, resourceRole : document.getElementById("ResourceRole").value,
+        englishLevel : document.getElementById("EnglishLevel").value,
+        officeLocation : document.getElementById("OfficeLocation").value,
+        client : document.getElementById("client").value,
+        project : document.getElementById("project").value};
+    return employee;
+
+}
+
+function valuesUsers(){
+    var user = {name: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        email: document.getElementById("userEmail").value,
+        password: document.getElementById("userPassword").value,
+        confPassword: document.getElementById("userConfirmPassword").value,
+        role: {id: document.getElementById("RoleOptions").value}};
+    return user;
+
+}
+
+function validateControl(e) {
+  if(!e.checkValidity()) {
+    if(e.classList.contains('valid')) {
+      e.classList.remove('valid');
+    }
+    e.classList.add('invalid');
+  } else {
+    if(e.classList.contains('invalid')) {
+      e.classList.remove('invalid');
+    }
+    e.classList.add('valid');
+  }
+}
+
+function registrationEmployee() {
+   if(!document.querySelector('form').checkValidity()) {
+      alert('El formulario tiene errores');
+   }
+
+   else{
+    var employee = valuesEmployee();
+
+    var url = "http://localhost:8083/api/admin/createEmployee";
+    var http = new XMLHttpRequest();
+    var json = JSON.stringify(employee);
+    http.open("POST", url, true);
+    http.setRequestHeader('Content-Type', 'application/json');
+    http.onload = function () {
+            if (http.readyState === 4 && http.status === 201) {
+                window.location.replace('http://localhost:8083/web/admin/index.html');
+            } 
+            else if(http.status===406){
+                alert ("Resource Number o Enterprise Id ya existe");
+                window.location.replace('http://localhost:8083/web/admin/registrationEmployee.html');
+            }
+            else {
+                alert("The registration fail");
+                window.location.replace('http://localhost:8083/web/admin/registrationEmployee.html');
+            }
+        }
+        http.send(json);
+
+
+   }
+
+}
+
+
+function registration() {
+
+    var user = valuesUsers();
+
+    if (user.password === user.confPassword) {
+        var url = 'http://localhost:8083/api/admin/create';
         var http = new XMLHttpRequest();
 
-        var json = JSON.stringify();
+        var dto = {"name": user.name, "lastName": user.lastName, "email": user.email, "password": user.password, "role": {"id": user.role}};
+
+        var json = JSON.stringify(dto);
 
         http.open("POST", url, true);
         http.setRequestHeader('Content-Type', 'application/json');
@@ -28,22 +99,48 @@ function registration() {
     }
 }
 
+
+
 function buttonEdit(id) {
     sessionStorage.setItem("userId", id);
     window.location.replace('http://localhost:8083/web/admin/userUpdate.html');
 }
 
+function buttonEditEmployee(id) {
+    sessionStorage.setItem("employeeId", id);
+    window.location.replace('http://localhost:8083/web/admin/employeesUpdate.html');
+}
+
+
+
 function buttonDelete(id) {
-    var url = "http://localhost:8083/api/user/"+id+"/delete";
+    var url = "http://localhost:8083/api/admin/delete/" + id;
     var http = new XMLHttpRequest();
 
     http.open("DELETE", url, true);
     http.onload = function () {
         if (http.readyState === 4 && http.status === 200) {
-            window.location.replace('http://localhost:8083/web/admin/userInactive.html');
+            window.location.replace('http://localhost:8083/web/admin/usersInactive.html');
         } else {
             alert('Fail');
             window.location.replace('http://localhost:8083/web/admin/usersActive.html');
+        }
+    }
+
+    http.send();
+}
+
+function buttonDeleteEmployee(id) {
+    var url = "http://localhost:8083/api/admin/deleteEmployee/"+id;
+    var http = new XMLHttpRequest();
+
+    http.open("DELETE", url, true);
+    http.onload = function () {
+        if (http.readyState === 4 && http.status === 200) {
+            window.location.replace('http://localhost:8083/web/admin/employeesInactive.html');
+        } else {
+            alert('Fail');
+            window.location.replace('http://localhost:8083/web/admin/employeesActive.html');
         }
     }
 
@@ -51,13 +148,13 @@ function buttonDelete(id) {
 }
 
 function buttonAbsolutDelete(id) {
-    var url = "http://localhost:8083/api/user/"+id+"/permanentDelete";
+    var url = "http://localhost:8083/api/admin/permanentDelete/" + id;
     var http = new XMLHttpRequest();
 
     http.open("DELETE", url, true);
     http.onload = function () {
         if (http.readyState === 4 && http.status === 200) {
-            window.location.replace('http://localhost:8083/web/admin/userInactive.html');
+            window.location.replace('http://localhost:8083/web/admin/usersInactive.html');
         } else {
             alert('Fail');
             window.location.replace('http://localhost:8083/web/admin/usersActive.html');
@@ -66,47 +163,57 @@ function buttonAbsolutDelete(id) {
 
     http.send();
 }
+function buttonAbsolutDeleteEmployee(id) {
+    var url = "http://localhost:8083/api/admin/permanentDeleteEmployee/"+id;
+    var http = new XMLHttpRequest();
+
+    http.open("DELETE", url, true);
+    http.onload = function () {
+        if (http.readyState === 4 && http.status === 200) {
+            window.location.replace('http://localhost:8083/web/admin/employeesInactive.html');
+        } else {
+            alert('Fail');
+            window.location.replace('http://localhost:8083/web/admin/employeesActive.html');
+        }
+    }
+
+    http.send();
+}
 
 function movePage (page) {
-    window.location.replace('http://localhost:8083/web/admin/'+page+'.html');
+    window.location.replace('http://localhost:8083/web/admin/' + page + '.html');
 }
 
 function update() {
     'use strict';
     var id = sessionStorage.getItem("userId");
-    var name = document.getElementById("firstName").value;
-    var lastName = document.getElementById("lastName").value;
-    var email = document.getElementById("userEmail").value;
-    var password = document.getElementById("userPassword").value;
-    var confPassword = document.getElementById("userConfirmPassword").value;
-    var role = document.getElementById("RoleOptions").value;
-
-    if (name === "") {
-        name = null;
+    var user =  valuesUsers();
+    
+    if (user.name === "") {
+        user.name = null;
     }
-    if (lastName === "") {
-        lastName = null;
+    if (user.lastName === "") {
+        user.lastName = null;
     }
-    if (email === "") {
-        email = null;
+    if (user.email === "") {
+        user.email = null;
     }
-    if (password === "") {
-        password = null;
+    if (user.password === "") {
+        user.password = null;
     }
-    if (confPassword === "") {
-        password = null;
+    if (user.confPassword === "") {
+        user.confPassword = null;
     }
-    if (role === "--") {
-        role = null;
+    if (user.role.id === "--") {
+        user.role.id = null;
     }
 
-    if (password === null) {
-        var url = 'http://localhost:8083/api/user/' + id;
+    if (user.password === null) {
+        var url = 'http://localhost:8083/api/admin/update/' + id;
         var http = new XMLHttpRequest();
+       
 
-        var dto = {"name": name, "lastName": lastName, "email": email, "password": password, "role": role};
-
-        var json = JSON.stringify(dto);
+        var json = JSON.stringify(user);
 
         http.open("PUT", url, true);
         http.setRequestHeader('Content-Type', 'application/json');
@@ -120,13 +227,12 @@ function update() {
             }
         }
         http.send(json);
-    } else if (password === confPassword) {
-        var url = 'http://localhost:8083/api/user/' + id;
+    } else if (user.password === user.confPassword) {
+        var url = 'http://localhost:8083/api/admin/update/' + id;
         var http = new XMLHttpRequest();
 
-        var dto = {"name": name, "lastName": lastName, "email": email, "password": password, "role": role};
 
-        var json = JSON.stringify(dto);
+        var json = JSON.stringify(user);
 
         http.open("PUT", url, true);
         http.setRequestHeader('Content-Type', 'application/json');
@@ -143,4 +249,59 @@ function update() {
     } else {
         window.location.replace('http://localhost:8083/web/admin/userUpdate.html');
     }
+}
+
+function updateEmployee() {
+    'use strict';
+    var id = sessionStorage.getItem("employeeId");
+    var employee = valuesEmployee();
+
+    if (employee.name == "") {
+        employee.name = null;
+    }
+    if (employee.lastName == "") {
+        employee.lastName = null;
+    }
+    if (employee.enterpriseID == "") {
+        employee.enterpriseID = null;
+    }
+    if (employee.resourceNumber == "") {
+        employee.resourceNumber = null;
+    }
+    if (employee.gender == "--") {
+        employee.gender = null;
+    }
+    if (employee.resourceRole == "--") {
+        employee.resourceRole = null;
+    }
+    if (employee.englishLevel == "--") {
+        employee.englishLevel = null;
+    }
+    if (employee.officeLocation == "--") {
+        employee.officeLocation = null;
+    }
+    if (employee.client == "") {
+        employee.client = null;
+    }
+    if (employee.project == "") {
+        employee.project = null;
+    }
+
+    var url = 'http://localhost:8083/api/admin/updateEmployee/' + id;
+    var http = new XMLHttpRequest();
+
+    var json = JSON.stringify(employee);
+
+    http.open("PUT", url, true);
+    http.setRequestHeader('Content-Type', 'application/json');
+    http.onload = function () {
+        if (http.readyState === 4 && http.status === 200) {
+            sessionStorage.removeItem("employeeId");
+            window.location.replace('http://localhost:8083/web/admin/employeesActive.html');
+        } else {
+            alert("The update fail");
+            window.location.replace('http://localhost:8083/web/admin/employeesUpdate.html');
+        }
+    }
+        http.send(json);
 }

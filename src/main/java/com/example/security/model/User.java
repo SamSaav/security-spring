@@ -40,6 +40,10 @@ public class User {
         this.active = true;
     }
 
+    public void initActive() {
+        this.active = true;
+    }
+
     public long getId() {
         return id;
     }

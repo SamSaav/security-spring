@@ -91,7 +91,13 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/web/css/**").permitAll()
                 .antMatchers("/api/user").permitAll()
                 .antMatchers("/web/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/api/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/api/veedor/**").hasAuthority("ADMIN")
+                .antMatchers("/web/admin/**").hasAuthority("DBA")
+                .antMatchers("/api/admin/**").hasAuthority("DBA")
+                .antMatchers("/api/veedor/**").hasAuthority("DBA")
                 .antMatchers("/web/veedor/**").hasAuthority("VEEDOR")
+                .antMatchers("/api/veedor/**").hasAuthority("VEEDOR")
                 .anyRequest().permitAll();
 
         http.formLogin()
