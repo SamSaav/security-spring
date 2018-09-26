@@ -18,11 +18,6 @@ public enum UrlMicroservicios {
               return "http://ms-empleado/veedor/employees";
             }
         },
-        MS_EMPLEADO {
-            public String toString() {
-              return "http://ms-empleado/veedor";
-            }
-        },
         MS_EMPLEADOS_UPDATE {
             public String toString() {
                 return "http://ms-empleado/admin/update";
