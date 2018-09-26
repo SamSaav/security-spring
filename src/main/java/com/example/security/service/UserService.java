@@ -174,14 +174,22 @@ public class UserService {
         }
     }
 
-
-    public ResponseEntity<?> createEmployee(Object employee) {
+    public ResponseEntity<?> getEmployee(Long id) {
         if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1) {
-            return new ResponseEntity<>(restTemplate.postForObject(UrlMicroservicios.MS_NEW_EMPLEADOS.toString(), employee, Object.class), HttpStatus.CREATED);
         } else {
+            return new ResponseEntity<>(maps("employee", restTemplate.getForObject(UrlMicroservicios.MS_EMPLEADO.toString()+ id.toString(), Object.class)), HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<?> createEmployee(Object employee) {
+        Object empleado = restTemplate.postForObject(UrlMicroservicios.MS_NEW_EMPLEADOS.toString(), employee, Object.class);
+        if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1 && empleado!= null) {
+            return new ResponseEntity<>(empleado, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Enterprise Id o Resource Number already exists", HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

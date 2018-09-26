@@ -59,6 +59,11 @@ public class UserController {
         return userService.getAllEmployees();
     }
 
+    @GetMapping("/employee/{id}")
+    public ResponseEntity<?> getAllEmployees(@PathVariable Long id) {
+        return userService.getEmployee(id);
+    }
+
     @PostMapping("/createEmployee")
     public ResponseEntity<?> createEmployee(@RequestBody Object employee) {
         return userService.createEmployee(employee);

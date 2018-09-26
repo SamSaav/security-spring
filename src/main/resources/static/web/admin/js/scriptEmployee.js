@@ -64,7 +64,7 @@ function createTheTableEmployee(jsonObj) {
 	td12.setAttribute('class', 'col-xs-3 modificaciones');
 	var button1 = document.createElement('button');
 	button1.setAttribute('type', 'button');
-	button1.setAttribute('onclick', 'buttonEdit('+employee.id+')');
+	button1.setAttribute('onclick', 'buttonEditEmployee('+employee.id+')');
 	button1.setAttribute('value', 'Edit');
 	button1.setAttribute('class', 'btn btn-dark btn-lg');
 	var span1 = document.createElement('span');
@@ -72,7 +72,7 @@ function createTheTableEmployee(jsonObj) {
 	span1.setAttribute('aria-hidden', 'true');
 	var button2 = document.createElement('button');
 	button2.setAttribute('type', 'button');
-	button2.setAttribute('onclick', 'buttonDelete('+employee.id+')');
+	button2.setAttribute('onclick', 'buttonDeleteEmployee('+employee.id+')');
 	button2.setAttribute('value', 'Delete');
 	if (activesBody !== null) {
 		button2.setAttribute('class', 'btn btn-danger btn-lg');
@@ -86,7 +86,7 @@ function createTheTableEmployee(jsonObj) {
 		span2.setAttribute('aria-hidden', 'true');
 		var button3 = document.createElement('button');
 		button3.setAttribute('type', 'button');
-		button3.setAttribute('onclick', 'buttonAbsolutDelete('+employee.id+')');
+		button3.setAttribute('onclick', 'buttonAbsolutDeleteEmployee('+employee.id+')');
 		button3.setAttribute('value', 'Delete');
 		button3.setAttribute('class', 'btn btn-danger btn-lg');
 		var span3 = document.createElement('span');

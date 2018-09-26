@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration Page</title>
+    <title>ADMIN</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/body.css">
@@ -60,35 +60,35 @@
         </nav>
         <div class="jumbotron">
             <div class="container">
-                <h1>Employee Registration Interface</h1>
+                <h1>Employee Update Interface</h1>
             </div>
         </div>
 </header>
 <main class="row">
     <div class="col-xs-1 col-sm-3"></div>
     <form class="col-xs-10 col-sm-6" method="POST" id="registration-form" onsubmit="return false">
+        <p>* Leave empty any field that you don't want to change</p>
         <div class="form-group">
             <label for="firstName">First Name</label>
-            <input type="text" class="form-control" id="firstName" placeholder="First Name" pattern="[A-Za-z]{4,}" required />
+            <input type="text" class="form-control" id="firstName" placeholder="First Name">
         </div>
         <div class="form-group">
             <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="Last Name" pattern="[A-Za-z]{4,}"
-           required />
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name">
         </div>
         <div class="form-group">
             <label for="enterpriseId">Enterprise Id</label>
-            <input type="email" class="form-control" id="enterpriseId" placeholder="Enterprise Id" required/>
+            <input type="email" class="form-control" id="enterpriseId"
+                   placeholder="Enterprise Id ">
         </div>
         <div class="form-group">
             <label for="phone">Resource Number</label>
             <input type="tel" class="form-control" id="resourceNumber" placeholder="Resource Number" pattern="[0-9]{8}"
            required />
-            <p>* 8 digits</p>
         </div>
         <div>
             <label for="Gender">Gender</label>
-            <select class="form-control" name="Gender" id="Gender" required>
+            <select class="form-control" name="Gender" id="Gender">
                 <option value="">--</option>
                 <option name="Gender" value="Male">Male</option>
                 <option name="Gender" value="Female">Female</option>
@@ -96,7 +96,7 @@
         </div>
         <div>
             <label for="ResourceRole">Resource Role</label>
-            <select class="form-control" name="ResourceRole" id="ResourceRole" required />
+            <select class="form-control" name="ResourceRole" id="ResourceRole">
                 <option value="">--</option>
                 <option name="ResourceRole" value="Application Development Associate">Application Development Associate</option>
                 <option name="ResourceRole" value="Application Development Analyst">Application Development Analyst</option>
@@ -105,7 +105,7 @@
         </div>
         <div>
             <label for="EnglishLevel">English Level</label>
-            <select class="form-control" name="EnglishLevel" id="EnglishLevel" required />
+            <select class="form-control" name="EnglishLevel" id="EnglishLevel">
                 <option value="">--</option>
                 <option name="EnglishLevel" value="No completo el test">No completo el test</option>
                 <option name="EnglishLevel" value="Level 1-Beginner">Level 1-Beginner</option>
@@ -128,7 +128,7 @@
         </div>
         <div>
             <label for="OfficeLocation">Office Location</label>
-            <select class="form-control" name="OfficeLocation" id="OfficeLocation" required />
+            <select class="form-control" name="OfficeLocation" id="OfficeLocation">
                 <option value="">--</option>
                 <option name="OfficeLocation" value="Buenos Aires Roque Saenz Peña">Buenos Aires Roque Saenz Peña</option>
                 <option name="OfficeLocation" value="Rosario Santa Fe">Rosario Santa Fe</option>
@@ -138,15 +138,16 @@
         </div>
         <div class="form-group">
             <label for="client">Client</label>
-            <input type="text" class="form-control" id="client" placeholder="Client" pattern="[0-9]{1,}" required />
+            <input type="number" class="form-control" id="client"
+                   placeholder="Client">
         </div>        
         <div class="form-group">
             <label for="project">Project</label>
-            <input type="text" class="form-control" id="project"
-                   placeholder="Project" patter="[0,9]{1,}" required />
+            <input type="number" class="form-control" id="project"
+                   placeholder="Project">
         </div>
         <br>
-        <button type="submit" class="submit-button" onclick="registrationEmployee()">Submit</button>
+        <button type="submit" class="submit-button" onclick="updateEmployee()">Submit</button>
     </form>
     <div class="col-xs-1 col-sm-3"></div>
 </main>
@@ -158,6 +159,7 @@
         crossorigin="anonymous"></script>
 <script src="../js/script.js"></script>
 <script src="js/functions.js"></script>
+<script src="js/updateEmployee.js"></script>
 </body>
 <!-- Footer -->
 <br>
