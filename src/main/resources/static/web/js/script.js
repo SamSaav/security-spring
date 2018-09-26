@@ -31,12 +31,11 @@ function accessLogin(email, password, role) {
     http.setRequestHeader('Content-Type', 'application/json');
     http.onload = function () {
         if (http.readyState === 4 && http.status === 200) {
-            if (role === 'ADMIN') {
+            if (role === 'ADMIN' || role === 'DBA') {
                 window.location.replace('http://localhost:8083/web/admin/index.html');
             } else if (role === 'VEEDOR') {
                 window.location.replace('http://localhost:8083/web/veedor/index.html');
             } else {
-                sessionStorege.removeItem('role2');
                 return 'ERROR';
             }
         } else {

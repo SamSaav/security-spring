@@ -10,27 +10,27 @@ public enum UrlMicroservicios {
         },
         MS_NEW_EMPLEADOS {
             public String toString() {
-            return "http://ms-empleado/admin/create";
+            return "http://ms-empleado/api/admin/create";
         }
         },
         MS_EMPLEADOS {
             public String toString() {
-              return "http://ms-empleado/veedor/employees";
+              return "http://ms-empleado/api/veedor/employees";
             }
         },
         MS_EMPLEADOS_UPDATE {
             public String toString() {
-                return "http://ms-empleado/admin/update";
+                return "http://ms-empleado/api/admin/update";
             }
         },
         MS_EMPLEADOS_DELETE {
             public String toString() {
-                return "http://ms-empleado/admin/delete";
+                return "http://ms-empleado/api/admin/delete";
             }
         },
         MS_EMPLEADOS_PERMANENT_DELETE {
             public String toString() {
-                return "http://ms-empleado/admin/permanentDelete";
+                return "http://ms-empleado/api/admin/permanentDelete";
             }
         }
 }

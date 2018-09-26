@@ -93,6 +93,8 @@ public class UserService {
                 return new ResponseEntity<>("Name not available", HttpStatus.FORBIDDEN);
             }
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.initActive();
+            roleRepository.getById(user.getRole().getId());
             userRepository.save(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } else {
@@ -173,7 +175,7 @@ public class UserService {
         Object empleado = restTemplate.postForObject(UrlMicroservicios.MS_NEW_EMPLEADOS.toString(), employee, Object.class);
         if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1 && empleado!= null) {
+        } else if ((getRole(isAuth()) == 1 || getRole(isAuth()) == 2) && empleado!= null) {
             return new ResponseEntity<>(empleado, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Enterprise Id o Resource Number already exists", HttpStatus.NOT_ACCEPTABLE);
@@ -183,7 +185,7 @@ public class UserService {
     public ResponseEntity<?> updateEmployee (Long id, Object employee) {
         if (isAuth() == null) {
             return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1 || getRole(isAuth()) == 2) {
+        } else if ((getRole(isAuth()) == 1 || getRole(isAuth()) == 2) && employee != null) {
             String url = UrlMicroservicios.MS_EMPLEADOS_UPDATE.toString() + "/" + id;
             HttpEntity<Object> requestUpdate = new HttpEntity<>(employee);
             return new ResponseEntity<>(restTemplate.exchange(url, HttpMethod.PUT, requestUpdate, Void.class), HttpStatus.OK);

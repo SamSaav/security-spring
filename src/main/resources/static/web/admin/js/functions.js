@@ -1,22 +1,24 @@
 function valuesEmployee(){
 
-    var employee = {name:document.getElementById("firstName").value, lastName:document.getElementById("lastName").value, 
-    enterpriseID:document.getElementById("enterpriseId").value, resourceNumber:document.getElementById("resourceNumber").value, 
-    gender:document.getElementById("Gender").value, resourceRole : document.getElementById("ResourceRole").value, 
-    englishLevel : document.getElementById("EnglishLevel").value, 
-    officeLocation : document.getElementById("OfficeLocation").value, 
-    client : document.getElementById("client").value, 
-    project : document.getElementById("project").value};
+    var employee = {name:document.getElementById("firstName").value,
+        lastName:document.getElementById("lastName").value,
+        enterpriseID:document.getElementById("enterpriseId").value, resourceNumber:document.getElementById("resourceNumber").value,
+        gender:document.getElementById("Gender").value, resourceRole : document.getElementById("ResourceRole").value,
+        englishLevel : document.getElementById("EnglishLevel").value,
+        officeLocation : document.getElementById("OfficeLocation").value,
+        client : document.getElementById("client").value,
+        project : document.getElementById("project").value};
     return employee;
 
 }
 
 function valuesUsers(){
-    var user = {name: document.getElementById("firstName").value, lastName: document.getElementById("lastName").value, 
-    email: document.getElementById("userEmail").value, 
-    password: document.getElementById("userPassword").value, 
-    confPassword: document.getElementById("userConfirmPassword").value, 
-    role: document.getElementById("RoleOptions").value};
+    var user = {name: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        email: document.getElementById("userEmail").value,
+        password: document.getElementById("userPassword").value,
+        confPassword: document.getElementById("userConfirmPassword").value,
+        role: {id: document.getElementById("RoleOptions").value}};
     return user;
 
 }
@@ -74,10 +76,12 @@ function registration() {
     var user = valuesUsers();
 
     if (user.password === user.confPassword) {
-        var url = 'http://localhost:8083/api/user?name=' + user.name + '&lastName=' + user.lastName + '&email=' + user.email + '&password=' + user.password + '&role=' + user.role;
+        var url = 'http://localhost:8083/api/admin/create';
         var http = new XMLHttpRequest();
 
-        var json = JSON.stringify();
+        var dto = {"name": user.name, "lastName": user.lastName, "email": user.email, "password": user.password, "role": {"id": user.role}};
+
+        var json = JSON.stringify(dto);
 
         http.open("POST", url, true);
         http.setRequestHeader('Content-Type', 'application/json');
@@ -127,7 +131,7 @@ function buttonDelete(id) {
 }
 
 function buttonDeleteEmployee(id) {
-    var url = "http://localhost:8083/api/deleteEmployee/"+id;
+    var url = "http://localhost:8083/api/admin/deleteEmployee/"+id;
     var http = new XMLHttpRequest();
 
     http.open("DELETE", url, true);
@@ -160,7 +164,7 @@ function buttonAbsolutDelete(id) {
     http.send();
 }
 function buttonAbsolutDeleteEmployee(id) {
-    var url = "http://localhost:8083/api/permanentDelete/"+id;
+    var url = "http://localhost:8083/api/admin/permanentDeleteEmployee/"+id;
     var http = new XMLHttpRequest();
 
     http.open("DELETE", url, true);
@@ -198,13 +202,13 @@ function update() {
         user.password = null;
     }
     if (user.confPassword === "") {
-        user.password = null;
+        user.confPassword = null;
     }
-    if (user.role === "--") {
-        user.role = null;
+    if (user.role.id === "--") {
+        user.role.id = null;
     }
 
-    if (password === null) {
+    if (user.password === null) {
         var url = 'http://localhost:8083/api/admin/update/' + id;
         var http = new XMLHttpRequest();
        
@@ -223,7 +227,7 @@ function update() {
             }
         }
         http.send(json);
-    } else if (password === confPassword) {
+    } else if (user.password === user.confPassword) {
         var url = 'http://localhost:8083/api/admin/update/' + id;
         var http = new XMLHttpRequest();
 
@@ -250,9 +254,40 @@ function update() {
 function updateEmployee() {
     'use strict';
     var id = sessionStorage.getItem("employeeId");
-    var employee =  valuesEmployee();
+    var employee = valuesEmployee();
 
-    var url = 'http://localhost:8083/updateEmployee/' + id;
+    if (employee.name == "") {
+        employee.name = null;
+    }
+    if (employee.lastName == "") {
+        employee.lastName = null;
+    }
+    if (employee.enterpriseID == "") {
+        employee.enterpriseID = null;
+    }
+    if (employee.resourceNumber == "") {
+        employee.resourceNumber = null;
+    }
+    if (employee.gender == "--") {
+        employee.gender = null;
+    }
+    if (employee.resourceRole == "--") {
+        employee.resourceRole = null;
+    }
+    if (employee.englishLevel == "--") {
+        employee.englishLevel = null;
+    }
+    if (employee.officeLocation == "--") {
+        employee.officeLocation = null;
+    }
+    if (employee.client == "") {
+        employee.client = null;
+    }
+    if (employee.project == "") {
+        employee.project = null;
+    }
+
+    var url = 'http://localhost:8083/api/admin/updateEmployee/' + id;
     var http = new XMLHttpRequest();
 
     var json = JSON.stringify(employee);

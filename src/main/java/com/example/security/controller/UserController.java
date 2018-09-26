@@ -54,6 +54,11 @@ public class UserController {
         return userService.getAllEmployees();
     }
 
+    @GetMapping("/veedor/employees/{id}")
+    public ResponseEntity<?> getEmployee(@PathVariable("id") Long id) {
+        return userService.getEmployee(id);
+    }
+
     @PostMapping("/admin/createEmployee")
     public ResponseEntity<?> createEmployee(@RequestBody Object employee) {
         return userService.createEmployee(employee);
@@ -64,13 +69,13 @@ public class UserController {
         return userService.updateEmployee(id, employee);
     }
 
-    @DeleteMapping("/deleteEmployee/{id}")
+    @DeleteMapping("/admin/deleteEmployee/{id}")
     public ResponseEntity<?> deleteUpdate(@PathVariable("id") Long id) {
         return userService.hideEmployee(id);
     }
 
-    @DeleteMapping("/admin/permanentDelete/{id}")
-    public ResponseEntity<?> permanentDelete(@PathVariable("id") Long id) {
+    @DeleteMapping("/admin/permanentDeleteEmployee/{id}")
+    public ResponseEntity<?> permanentDeleteEmployee(@PathVariable("id") Long id) {
         return userService.deleteEmployee(id);
     }
 

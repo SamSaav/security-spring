@@ -1,6 +1,6 @@
 var employeeId = sessionStorage.getItem("employeeId");
 
-var url = 'http://localhost:8083/api/employee/' + employeeId;
+var url = 'http://localhost:8083/api/veedor/employees/' + employeeId;
 var http = new XMLHttpRequest();
 
 http.open("GET", url, true);
