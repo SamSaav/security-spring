@@ -1,4 +1,4 @@
-var url = 'http://localhost:8083/api/users';
+var url = 'http://localhost:8083/api/veedor/users';
 var http = new XMLHttpRequest();
 
 http.open("GET", url, true);
@@ -15,7 +15,7 @@ http.onload = function () {
 
 function getEmployee () {
 	'use strict';
-	var empUrl = 'http://localhost:8083/api/employees';
+	var empUrl = 'http://localhost:8083/api/veedor/employees';
 	var xhr = new XMLHttpRequest();
 
 	xhr.open("GET", empUrl, true);

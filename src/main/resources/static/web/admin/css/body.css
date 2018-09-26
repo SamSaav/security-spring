@@ -54,3 +54,13 @@ td {
 	color: white;
 	background-color: black;
 }
+
+input:required {
+	border: 1px solid blue;
+}
+input:valid {
+	border: 1px solid green;
+}
+input:invalid {
+	border: 1px solid red;
+}

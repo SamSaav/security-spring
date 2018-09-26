@@ -53,7 +53,7 @@ public class UserService {
 
     public ResponseEntity<?> allTheInformation(List<Object> users) {
         if (isAuth() == null) {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         } else {
             Object info = maps("users", users);
             return new ResponseEntity<>(info, HttpStatus.OK);
@@ -67,7 +67,7 @@ public class UserService {
 
     public ResponseEntity<?> getUserDTO(User user) {
         if (isAuth() == null) {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         } else {
             return new ResponseEntity<>(user.userDTO(), HttpStatus.OK);
         }
@@ -78,37 +78,41 @@ public class UserService {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> saveUser(String name, String lastName, String email, String password, Long role) {
-        /*if (isAuth() == null){
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1){*/
-        if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || role == null) {
-            return new ResponseEntity<>("Sin contenido", HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> saveUser(User user) {
+        if (isAuth() == null){
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1){
+            if (user.getName().isEmpty() ||
+                    user.getLastName().isEmpty() ||
+                    user.getEmail().isEmpty() ||
+                    user.getPassword().isEmpty() ||
+                    user.getRole() == null) {
+                return new ResponseEntity<>("No content", HttpStatus.NO_CONTENT);
+            }
+            if (userRepository.findByEmail(user.getEmail()) != null) {
+                return new ResponseEntity<>("Name not available", HttpStatus.FORBIDDEN);
+            }
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         }
-        if (userRepository.findByEmail(email) != null) {
-            return new ResponseEntity<>("Nombre en uso", HttpStatus.FORBIDDEN);
-        }
-        User user = new User(name, lastName, email, passwordEncoder.encode(password), roleRepository.getById(role));
-        userRepository.save(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-        /*} else {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        }*/
     }
 
     public ResponseEntity<?> updateUser(Long id, User usuario) {
         if (isAuth() == null) {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         } else if (getRole(isAuth()) == 1) {
             if (id != null && usuario != null) {
                 User user = userRepository.getById(id);
                 userRepository.save(getDataUpdateUser(user, usuario));
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Sin contenido", HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>("No content", HttpStatus.NO_CONTENT);
             }
         } else {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         }
     }
 
@@ -132,8 +136,8 @@ public class UserService {
 
     public ResponseEntity<?> deleteUser(Long id) {
         if (isAuth() == null) {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1) {
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1 || getRole(isAuth()) == 2) {
             User user = userRepository.getById(id);
             if (id != null && user != null) {
                 user.changeActive();
@@ -143,24 +147,25 @@ public class UserService {
                 return new ResponseEntity<>(maps("Missing data", false), HttpStatus.NO_CONTENT);
             }
         } else {
-            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         }
 
     }
 
     public ResponseEntity<?> permanentDeleteUser(Long id) {
         if (isAuth() == null) {
-            return new ResponseEntity<>("Forbidden", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         } else if (getRole(isAuth()) == 1) {
             User user = userRepository.getById(id);
             if (id != null && user != null) {
                 userRepository.delete(user);
-                return new ResponseEntity<>(maps("Eliminado", true), HttpStatus.OK);
+                return new ResponseEntity<>(maps("Deleted", true), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(maps("Sin contenido", false), HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(maps("No content" +
+                        "", false), HttpStatus.NO_CONTENT);
             }
         } else {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         }
 
     }
@@ -168,56 +173,64 @@ public class UserService {
 
     public ResponseEntity<?> getAllEmployees() {
         if (isAuth() == null) {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         } else {
             return new ResponseEntity<>(maps("employee", restTemplate.getForObject(UrlMicroservicios.MS_EMPLEADOS.toString(), Object.class)), HttpStatus.OK);
         }
     }
 
-
-    public ResponseEntity<?> createEmployee(Object employee) {
+    public ResponseEntity<?> getEmployee(Long id) {
         if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1) {
-            return new ResponseEntity<>(restTemplate.postForObject(UrlMicroservicios.MS_NEW_EMPLEADOS.toString(), employee, Object.class), HttpStatus.CREATED);
         } else {
+            return new ResponseEntity<>(maps("employee", restTemplate.getForObject(UrlMicroservicios.MS_EMPLEADO.toString()+ id.toString(), Object.class)), HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<?> createEmployee(Object employee) {
+        Object empleado = restTemplate.postForObject(UrlMicroservicios.MS_NEW_EMPLEADOS.toString(), employee, Object.class);
+        if (isAuth() == null) {
             return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1 && empleado!= null) {
+            return new ResponseEntity<>(empleado, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Enterprise Id o Resource Number already exists", HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
     public ResponseEntity<?> updateEmployee (Long id, Object employee) {
         if (isAuth() == null) {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1) {
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1 || getRole(isAuth()) == 2) {
             String url = UrlMicroservicios.MS_EMPLEADOS_UPDATE.toString() + "/" + id;
             HttpEntity<Object> requestUpdate = new HttpEntity<>(employee);
             return new ResponseEntity<>(restTemplate.exchange(url, HttpMethod.PUT, requestUpdate, Void.class), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         }
     }
 
     public ResponseEntity<?> hideEmployee(Long id) {
         if (isAuth() == null) {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
-        } else if (getRole(isAuth()) == 1) {
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
+        } else if (getRole(isAuth()) == 1 || getRole(isAuth()) == 2) {
             String url = UrlMicroservicios.MS_EMPLEADOS_DELETE.toString() + "/" + id;
             HttpEntity<?> requestDelete = new HttpEntity<>(id);
             return new ResponseEntity<>(restTemplate.exchange(url, HttpMethod.DELETE, requestDelete, Void.class), HttpStatus.OK);
         }else {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         }
     }
 
     public ResponseEntity<?> deleteEmployee(Long id) {
         if (isAuth() == null) {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         } else if (getRole(isAuth()) == 1) {
             String url = UrlMicroservicios.MS_EMPLEADOS_PERMANENT_DELETE.toString() + "/" + id;
             HttpEntity<?> requestDelete = new HttpEntity<>(id);
             return new ResponseEntity<>(restTemplate.exchange(url, HttpMethod.DELETE, requestDelete, Void.class), HttpStatus.OK);
         }else {
-            return new ResponseEntity<>("No autorizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.FORBIDDEN);
         }
     }
 

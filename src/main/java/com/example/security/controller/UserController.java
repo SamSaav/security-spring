@@ -14,12 +14,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("/veedor/users")
     public ResponseEntity<?> getUsers() {
         return userService.allTheInformation(userService.getUsersDTO(userService.getUsers()));
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/veedor/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         return userService.getUserDTO(userService.getUser(id));
     }
@@ -29,6 +29,12 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
+    @PostMapping("/admin/create")
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        return userService.saveUser(user);
+    }
+
+    @PutMapping("/admin/update/{id}")
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestParam String name, @RequestParam String lastName,
                                         @RequestParam String email, @RequestParam String password, @RequestParam Long role) {
@@ -40,7 +46,7 @@ public class UserController {
         return userService.updateUser(id, usuario);
     }
 
-    /*@GetMapping("/user/{id}/deleteById")
+    @DeleteMapping("/admin/delete/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable("id") Long id) {
         return userService.deleteUserById(id);
     }*/
@@ -50,21 +56,24 @@ public class UserController {
         return userService.deleteUser(id);
     }
 
-    @DeleteMapping("/user/{id}/permanentDelete")
+    @DeleteMapping("/admin/permanentDelete/{id}")
     public ResponseEntity<?> permanentDeleteUser(@PathVariable("id") Long id) {
         return userService.permanentDeleteUser(id);
     }
     @GetMapping("/employees")
+    @GetMapping("/veedor/employees")
     public ResponseEntity<?> getAllEmployees() {
         return userService.getAllEmployees();
     }
+
+    @PostMapping("/admin/createEmployee")
 
     @PostMapping("/createEmployee")
     public ResponseEntity<?> createEmployee(@RequestBody Object employee) {
         return userService.createEmployee(employee);
     }
 
-    @PutMapping("/updateEmployee/{id}")
+    @PutMapping("/admin/updateEmployee/{id}")
     public ResponseEntity<?> updateEmployee(@PathVariable("id") Long id, @RequestBody Object employee) {
         return userService.updateEmployee(id, employee);
     }
@@ -74,7 +83,7 @@ public class UserController {
         return userService.hideEmployee(id);
     }
 
-    @DeleteMapping("/permanentDelete/{id}")
+    @DeleteMapping("/admin/permanentDelete/{id}")
     public ResponseEntity<?> permanentDelete(@PathVariable("id") Long id) {
         return userService.deleteEmployee(id);
     }

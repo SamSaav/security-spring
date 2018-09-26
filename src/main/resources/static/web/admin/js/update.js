@@ -1,5 +1,5 @@
 var userId = sessionStorage.getItem("userId");
-var url = 'http://localhost:8083/api/user/' + userId;
+var url = 'http://localhost:8083/api/veedor/' + userId;
 var http = new XMLHttpRequest();
 
 http.open("GET", url, true);
